@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评估报告</title>
+    <script src="../static/js/jquery-3.3.1.js"></script>
+
+    <script src="../static/js/echarts.js"></script>
+
+</head>
+<body>
+<h2 style="font-size: 28px;text-align: center;">评估报告</h2>
+<hr>
+<div class="analysis-result" style="margin-top:20px;background: white;">
+    <div class="title" style="font-size: 20px;font-weight: 600;">
+        根据您上传的数据，评估结果如下：
+    </div>
+    <div class="pic" style="display: table;margin: 0 auto;margin-top: 20px">
+        <img id="origin" style="width: 400px;height:300px;float: left;" src="{{ result.png }}" title="预测结果">
+    </div>
+    <div>
+        <p style="margin-left: 20px;font-size: 20px;margin-top: 30px;font-weight: 600;">结果分析:</p>
+        <p style="margin-left: 20px;font-size: 20px;text-indent: 2em; margin-right: 20px;">
+            原始评估结果数据：{{ result }}。
+        </p>
+    </div>
+
+</div>
+</body>
+</html>

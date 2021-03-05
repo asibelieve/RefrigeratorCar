@@ -1,7 +1,6 @@
-import json
 import os
 
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, render_template
 from werkzeug.utils import secure_filename
 
 from ML import ML
@@ -44,5 +43,6 @@ def upload():
         result = ML.process(upload_path)
         # 将字典形式的数据转化为字符串
         print(result)
-
-    return json.dumps(result)
+        workpath = os.getcwd()
+        dir = workpath + "/static/result/result.png"
+    return render_template("assessinstance.html", result=result, dir=dir, flag=1)

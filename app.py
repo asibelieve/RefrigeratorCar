@@ -494,6 +494,3 @@ def adddevicefolder():
     return flag
 
 
-@app.route("/wait")
-def wait():
-    return render_template("wait.html")

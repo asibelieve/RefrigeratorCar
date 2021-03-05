@@ -26,7 +26,7 @@ import numpy as np
 import matplotlib
 
 for f in matplotlib.font_manager.fontManager.ttflist:
-    basePath = "C:/Work/Fish/ML/"
+    basePath = workpath = os.getcwd() + '/ML/'
 
 
 def data_divide(data):  # 定义数据分割函数，将数据分为训练集和测试集
@@ -215,7 +215,6 @@ def data_pretreatment(data_ysbc, data_ysgp):
     #    plt.xlabel('波长/nm Wavelength')
     #    plt.ylabel('反射率')
     #    matplotlib.rcParams['axes.unicode_minus'] =False#用于显示负号
-    #    plt.rcParams['font.sans-serif']=['SimHei'] #用来正常显示中文标签
     #    plt.show()
 
     # 标准正态变量交换SNV
@@ -469,8 +468,8 @@ def MCX_erase_PLS():  # 剔除异常点和PLS模型预测
     Y0 = pd.read_excel(io=(os.path.join(basePath, 'The_mid_data.xlsx')), usecols='L', header=None)
     plt.plot(list(range(round(ymax))), list(range(round(ymax))), yMCX_trhat.iloc[:, 0], Y0.iloc[:, 0], 'om')
     plt.title('数据中心化和PLSR的训练集预测结果')
-    plt.xlabel('预测值（mgN/100g）')
-    plt.ylabel('真实值（mgN/100g）')
+    plt.xlabel('True Value（mgN/100g）')
+    plt.ylabel('Predictive Value（mgN/100g）')
     matplotlib.rcParams['axes.unicode_minus'] = False  # 用于显示负号
     plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
     plt.show()
@@ -481,8 +480,8 @@ def MCX_erase_PLS():  # 剔除异常点和PLS模型预测
     Y0_test = pd.read_excel(io=(os.path.join(basePath, 'The_mid_data.xlsx')), usecols='N', header=None)
     plt.plot(list(range(round(ymax))), list(range(round(ymax))), yMCX_testhat.iloc[:, 0], Y0_test.iloc[:, 0], '*g')
     plt.title('数据中心化和PLSR的验证集预测结果')
-    plt.xlabel('预测值（mgN/100g）')
-    plt.ylabel('真实值（mgN/100g）')
+    plt.xlabel('True Value（mgN/100g）')
+    plt.ylabel('Predictive Value（mgN/100g）')
     matplotlib.rcParams['axes.unicode_minus'] = False  # 用于显示负号
     plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
     plt.show()
@@ -510,9 +509,9 @@ def nir_erase_PLS():  # ——剔除异常点和PLS模型预测
     ynir_trhat = pd.read_excel(io=(os.path.join(basePath, 'The_mid_data.xlsx')), usecols='P', header=None)
     Y0 = pd.read_excel(io=(os.path.join(basePath, 'The_mid_data.xlsx')), usecols='Q', header=None)
     plt.plot(list(range(round(ymax))), list(range(round(ymax))), ynir_trhat.iloc[:, 0], Y0.iloc[:, 0], 'oc')
-    plt.title('(11点)移动窗口平滑和PLSR的训练集预测结果')
-    plt.xlabel('预测值（mgN/100g）')
-    plt.ylabel('真实值（mgN/100g）')
+    plt.title('(11 points) moving window smoothing and PLSR training set prediction results')
+    plt.xlabel('True Value（mgN/100g）')
+    plt.ylabel('Predictive Value（mgN/100g）')
     matplotlib.rcParams['axes.unicode_minus'] = False  # 用于显示负号
     plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
     plt.show()
@@ -523,8 +522,8 @@ def nir_erase_PLS():  # ——剔除异常点和PLS模型预测
     Y0_test = pd.read_excel(io=(os.path.join(basePath, 'The_mid_data.xlsx')), usecols='S', header=None)
     plt.plot(list(range(round(ymax))), list(range(round(ymax))), ynir_testhat.iloc[:, 0], Y0_test.iloc[:, 0], '*g')
     plt.title('(11点)移动窗口平滑和PLSR的验证集预测结果')
-    plt.xlabel('预测值（mgN/100g）')
-    plt.ylabel('真实值（mgN/100g）')
+    plt.xlabel('True Value（mgN/100g）')
+    plt.ylabel('Predictive Value（mgN/100g）')
     matplotlib.rcParams['axes.unicode_minus'] = False  # 用于显示负号
     plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
     plt.show()
@@ -610,8 +609,8 @@ def ax_erase_PLS():  # 剔除异常点和PLS模型预测
     Y0 = pd.read_excel(io=(os.path.join(basePath, 'The_mid_data.xlsx')), usecols='AA', header=None)
     plt.plot(list(range(round(ymax))), list(range(round(ymax))), yax_trhat.iloc[:, 0], Y0.iloc[:, 0], 'o')
     plt.title('标准化和PLSR的训练集预测结果')
-    plt.xlabel('预测值（mgN/100g）')
-    plt.ylabel('真实值（mgN/100g）')
+    plt.xlabel('Predictive（mgN/100g）')
+    plt.ylabel('True value（mgN/100g）')
     matplotlib.rcParams['axes.unicode_minus'] = False  # 用于显示负号
     plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
     plt.show()
@@ -621,9 +620,9 @@ def ax_erase_PLS():  # 剔除异常点和PLS模型预测
     yax_testhat = pd.read_excel(io=(os.path.join(basePath, 'The_mid_data.xlsx')), usecols='AB', header=None)
     Y0_test = pd.read_excel(io=(os.path.join(basePath, 'The_mid_data.xlsx')), usecols='AC', header=None)
     plt.plot(list(range(round(ymax))), list(range(round(ymax))), yax_testhat.iloc[:, 0], Y0_test.iloc[:, 0], '*')
-    plt.title('标准化和PLSR的验证集预测结果')
-    plt.xlabel('预测值（mgN/100g）')
-    plt.ylabel('真实值（mgN/100g）')
+    plt.title('Validation set prediction results of standardization and PLSR')
+    plt.xlabel('Predictive value（mgN/100g）')
+    plt.ylabel('True value（mgN/100g）')
     matplotlib.rcParams['axes.unicode_minus'] = False  # 用于显示负号
     plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
     plt.show()
@@ -681,8 +680,8 @@ def SG_erase_PLS():  # 剔除异常点和PLS模型预测
              np.repeat(np.array(best_threshold_SG).reshape(1, 1), len(np.arange(1, xrow_SG, 0.1)), axis=0), '--r',
              LineWidth=2)
     plt.title('SavitZky-Golay卷积平滑法的马氏距离和最佳阈值')
-    plt.xlabel('样品序号')
-    plt.ylabel('马氏距离')
+    plt.xlabel('Sample serial number:')
+    plt.ylabel('mahalanobis distance')
     plt.xlim([0, xrow_SG])  # x轴边界
     matplotlib.rcParams['axes.unicode_minus'] = False  # 用于显示负号
     plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
@@ -862,13 +861,15 @@ def process(file_path):
         plt.plot(list(data_ysbc.iloc[0, :]), list(data_ysgp.iloc[i, :]), color=Color[random.randint(0, 6)],
                  linewidth=0.5)
 
-    plt.title('原始光谱图')
-    plt.xlabel('波长/nm Wavelength')
-    plt.ylabel('反射率')
+    plt.title('Original spectrogram')
+    plt.xlabel('wavelength/nm Wavelength')
+    plt.ylabel('reflectivity')
 
-    plt.rcParams['font.family'] = ['System Font']  # 用来正常显示中文标签
+    plt.rcParams['font.family'] = ['SimHei']  # 用来正常显示中文标签
     # plt.rcParams['axes.unicode_minus'] = False
 
-    plt.savefig("result.png")
+    workpath = os.getcwd()
+    print(workpath)
+    plt.savefig(workpath + "/static/result/result.png")
 
     return str(ymsc_testhat)

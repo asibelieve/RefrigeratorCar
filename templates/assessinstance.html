@@ -20,7 +20,7 @@
 
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="../static/js/tokenpublic.js"></script>
+
     <!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
@@ -29,196 +29,23 @@
     <script src="../static/js/echarts.js"></script>
     <script type="text/javascript">
         function imgChange(obj) {
-            var file = document.getElementById("picFile");
-            var imgFile = file.files[0];
-            var name = imgFile.name;
-            if (imgFile.name == "") {
-                alert("请上传图片");
+            var file = document.getElementById("file");
+            var File = file.files[0];
+            var name = File.name;
+            if (File.name == "") {
+                alert("请上传.xlsx文件");
                 return false;
             } else {
-                var imgStr = /\.(jpg|jpeg|png|bmp|BMP|JPG|PNG|JPEG)$/;
-                if (!imgStr.test(imgFile.name)) {
-                    alert("文件不是图片类型");
+                var imgStr = /\.(xlsx|XLSX)$/;
+                if (!imgStr.test(File.name)) {
+                    alert("文件不是.xlsx格式");
                     return false;
                 }
             }
-            var imgUrl = window.URL.createObjectURL(file.files[0]);
-            var img = document.getElementById('imghead');
-            img.setAttribute('src', imgUrl); // 修改img标签src属性值
         };
-        $(function () {
-            var flag =
-            {{ flag|tojson }}
-            if (flag == 1) {
-                var originimage = document.getElementById('imghead')
-                var path1 = {{ originpath|tojson }};
-                var path2 = {{ result_path|tojson }};
-                console.log(path1)
-                console.log(path2)
-                originimage.setAttribute('src', path1)
-                var resimage = document.getElementById('resimg')
-                resimage.setAttribute('src', path2)
-                var ec1 = echarts.init(document.getElementById('fishvisual'))
-                option = {
-                    backgroundColor: '#061326',
-                    "grid": {
-                        "top": "10%",
-                        "left": "15%",
-                        "bottom": "10%",
-                        "right": "10%",
-                        "containLabel": true
-                    },
-                    "xAxis": [{
-                        "type": "category",
-                        "data": ["鱼眼", "鱼鳃"],
-                        "axisTick": {
-                            "alignWithLabel": true
-                        },
-                        "nameTextStyle": {
-                            "color": "#82b0ec"
-                        },
-                        "axisLine": {
-                            "lineStyle": {
-                                "color": "#82b0ec"
-                            }
-                        },
-                        "axisLabel": {
-                            "textStyle": {
-                                "color": "#fff"
-                            },
-                            margin: 45
-                        }
-                    }],
-                    "yAxis": [{
-                        "type": "value",
-                        "axisLabel": {
-                            "textStyle": {
-                                "color": "#82b0ec"
-                            },
-                            // "formatter": "{value}%"
-                        },
-                        "splitLine": {
-                            "lineStyle": {
-                                "color": "#0c2c5a"
-                            }
-                        },
-                        "axisLine": {
-                            "show": false
-                        }
-                    }],
-                    "series": [{
-                        "name": "",
-                        type: 'pictorialBar',
-                        symbolSize: [60, 16],
-                        symbolOffset: [0, -10],
-                        symbolPosition: 'end',
-                        z: 12,
-                        // "barWidth": "0",
-                        "label": {
-                            "normal": {
-                                "show": true,
-                                "position": "top",
-                                // "formatter": "{c}%"
-                                fontSize: 30,
-                                fontWeight: 'bold',
-                                color: '#34DCFF'
-                            }
-                        },
-                        "data": [{
-                            "value": {{ eye_believeble }},
-                            "itemStyle": {
-                                "color": "#2DB1EF"
-                            }
-                        }, {
-                            "value": {{ gill_believeble }},
-                            "itemStyle": {
-                                "color": "#2DB1EF"
-                            }
-                        }]
-                    },
-                        {
-                            name: '',
-                            type: 'pictorialBar',
-                            symbolSize: [60, 16],
-                            symbolOffset: [0, 10],
-                            // "barWidth": "20",
-                            z: 12,
-                            "data": [{
-                                "value": {{ eye_believeble }},
-                                "itemStyle": {
-                                    "color": "#2DB1EF"
-                                }
-                            }, {
-                                "value": {{ gill_believeble }},
-                                "itemStyle": {
-                                    "color": "#2DB1EF"
-                                }
-                            }]
-                        },
-                        {
-                            name: '',
-                            type: 'pictorialBar',
-                            symbolSize: [90, 30],
-                            symbolOffset: [0, 20],
-                            z: 10,
-                            itemStyle: {
-                                normal: {
-                                    color: 'transparent',
-                                    borderColor: '#2EA9E5',
-                                    borderType: 'solid',
-                                    borderWidth: 1
-                                }
-                            },
-                            data: [{{ eye_believeble }}, {{ gill_believeble }}]
-                        },
-                        {
-                            name: '',
-                            type: 'pictorialBar',
-                            symbolSize: [120, 40],
-                            symbolOffset: [0, 30],
-                            z: 10,
-                            itemStyle: {
-                                normal: {
-                                    color: 'transparent',
-                                    borderColor: '#19465D',
-                                    borderType: 'solid',
-                                    borderWidth: 2
-                                }
-                            },
-                            data: [{{ eye_believeble }}, {{ gill_believeble }}]
-                        },
-                        {
-                            type: 'bar',
-                            itemStyle: {
-                                normal: {
-                                    //color: '#14b1eb',
-                                    opacity: .9
-                                }
-                            },
-                            //silent: true,
-                            "barWidth": "60",
-                            barGap: '10%', // Make series be overlap
-                            barCateGoryGap: '10%',
-                            "data": [{
-                                "value": {{ eye_believeble }},
-                                "itemStyle": {
-                                    "color": "#1B6A95"
-                                }
-                            }, {
-                                "value": {{ gill_believeble }},
-                                "itemStyle": {
-                                    "color": "#1B6A95"
-                                }
-                            }]
-                        }
-                    ]
-                }
-                ec1.setOption(option)
-            }
-        });
-    </script>
-    <link href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+
+        <link href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet">
+            <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="../static//My97DatePicker/WdatePicker.js"></script>
     <link rel="stylesheet" href="../static/css/assessinstance.css">
 </head>
@@ -252,12 +79,7 @@
                             实例
                         </a>
                     </div>
-                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
-                        <div class="card-body">
-                            <p class="card-text"><a href="/assessinstance">金鲳</a></p>
-                            <p class="card-text"><a href="/assessyinchang">银鲳</a></p>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </li>
@@ -267,17 +89,16 @@
             <h3 class="title" style="font-weight: 600">实例</h3>
         </div>
         <div class="assess-func-div2">
-            <div class="div2-son">
-                <div class="son-title">
-                    <img class="plus" id="imghead" alt="" src="../static/images/plus.jpg">
+            {% if flag!=1 %}
+                <div class="div2-son">
+                    <div class="selectbtn">
+                        <form action="/access_shrimp" method="POST" enctype="multipart/form-data">
+                            <input type="file" name="file" id="file" ;"/>
+                            <input type="submit" value="上传">
+                        </form>
+                    </div>
                 </div>
-                <div class="selectbtn">
-                    <form action="/upload?type={{ type }}" method="POST" enctype="multipart/form-data">
-                        <input type="file" name="file" id="picFile" onchange="imgChange(this);"/>
-                        <input type="submit" value="上传">
-                    </form>
-                </div>
-            </div>
+            {% endif %}
             {% if flag %}
                 <div class="analysis-result"
                      style="margin-left: 40px;margin-top:20px;background: white;height: 1100px;">
@@ -286,35 +107,16 @@
                     <p style="margin-left: 20px;font-size: 20px;">预测结果可视化:</p>
                     <div>
                         <img id="resimg" style="width: 400px;display: table-cell;margin: 0 auto;"
-                             src="../static/uploadFileDir/result/img.png" title="预测结果">
+                             src="../static/result/result.png" title="预测结果">
                     </div>
                     <div>
                         <p style="margin-left: 20px;font-size: 20px;margin-top: 30px">结果分析:</p>
                         <p style="margin-left: 20px;font-size: 20px;text-indent: 2em; margin-right: 20px;">
-                            由预测结果可知，鱼眼部位的评定等级为{{ eye_fresh_level }}，可信度为{{ eye_believeble }}；
-                            鱼鳃的评定等级为{{ gill_fresh_level }}，可信度为{{ gill_believeble }}；由上述结果可综合评定该鱼的新鲜度等级为{{ all_fresh_level }}。
+                            原始评估数据为：{{ result }}。
                         </p>
                     </div>
-                    <div id="fishvisual"
-                         style="width: 600px;height: 500px;display: table-cell;padding-left: 40px;float: left">
 
-                    </div>
-                    <div class="star" style="display: table-cell;padding-left: 50px;padding-top: 100px">
-                        <div>
-                            <span style="float: left;margin-top: 10px;">鱼眼:</span>
-                            {% for foo in eye_star_len %}
-                                <img src="../static/images/star.png" style="width: 40px;float: left;">
-                            {% endfor %}
-                        </div>
-                        <br>
-                        <div>
-                            <span style="float: left;margin-top: 10px;margin-right: -10px;">鱼鳃：</span>
-                            {% for foo in gill_star_len %}
-                                <img src="../static/images/star.png" style="width: 40px;float: left;">
-                            {% endfor %}
-                        </div>
-                        <br>
-                    </div>
+
                 </div>
             {% endif %}
         </div>
