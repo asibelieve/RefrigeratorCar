@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #333;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #333;
+    font-size: 15px;
+    margin-top: -10px;
+}
+
+.not-choose {
+    float: left;
+}
+
+.card {
+    background-color: #333;
+}
+
+.card-text {
+    color: black;
+}
+
+.card-body {
+    background-color: white;
+}
+
+.card-link {
+    margin-left: -10px;
+}
+
+.card-header {
+    margin-top: -15px;
+}
+
+.asses-block {
+    margin-top: -20px;
+}
+
+.div2-son {
+    height: 450px;
+}
+
+.plus {
+    width: 400px;
+    height: 300px;
+    margin-left: 30%;
+    margin-top: 50px;
+}
+
+.selectbtn {
+    margin-left: 40%;
+    margin-top: 20px;
+}

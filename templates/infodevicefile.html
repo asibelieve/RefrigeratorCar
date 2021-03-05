@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>信息采集</title>
+    <link rel="stylesheet" href="../static/css/control.css">
+    <link rel="stylesheet" href="../static/css/assess.css">
+    <link rel="stylesheet" href="../static/css/assessinstance.css">
+    <link rel="stylesheet" href="../static/css/Dynamic.css">
+    <link rel="stylesheet" href="../static/css/info.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <script src="../static/js/jquery-1.11.0.min.js"></script>
+    <script src="../static/js/tokenpublic.js"></script>
+    <script src="../static/js/echarts.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/layer/layer.js"></script>
+    <script type="text/javascript">
+        var dynamicdata = {
+            data:{{ result1|tojson }}
+        }
+    </script>
+    <script src="../static/js/dynamicshow.js"></script>
+</head>
+<script>
+    window.onload = function () {
+        $(".waitpicshow")[0].style.display = "none";
+        $(".donepicshow")[0].style.display = "none";
+        $("#all_show").attr("checked", "checked");
+        var input = document.getElementById("file_input");
+        input.addEventListener('change', readFile, false);
+        var flag =
+        {{ flag }}
+        if (flag == 1) {
+            alert("上传文件有与该目录下同名文件")
+        } else if (flag == 2) {
+            alert("无可上传文件!")
+        }
+
+        function readFile() {
+            for (var i = 0; i < this.files.length; i++) {
+                if (!input['value'].match(/.jpg|.jpeg|.png|.JPG|.PNG|.JPEG/i)) {　　//判断上传文件格式
+                    return alert("上传的图片格式不正确，请重新选择")
+                }
+            }
+        }
+
+        var del = document.querySelector('.del');
+        var wrap = document.querySelector('.allpicshow');
+        var wrap1 = document.querySelector('.donepicshow');
+        var wrap2 = document.querySelector('.waitpicshow');
+        del.onclick = function () {
+            index = layer.open({
+                type: 1,
+                title: "确认删除",
+                area: ["400px", "200px"],
+                content: $('#confirmdel')
+            })
+        };
+        $(".confirm").click(function () {
+            layer.close(index)
+            /* 删除选中的元素 */
+            var fileName = wrap.querySelectorAll('input:checked');
+            var fileName1 = wrap1.querySelectorAll('input:checked');
+            var fileName2 = wrap2.querySelectorAll('input:checked');
+            var delnameList = []
+            var devicename = "{{ devicename }}"
+            var foldername = "{{ foldername }}"
+            if (fileName.length == 0 && fileName1.length == 0 && fileName2.length == 0) {
+                alert("无删除文件！")
+            } else {
+                for (var i = 0; i < fileName.length; i++) {
+                    delnameList.push(fileName[i].id)
+                }
+                for (var i = 0; i < fileName1.length; i++) {
+                    delnameList.push(fileName1[i].id)
+                }
+                for (var i = 0; i < fileName2.length; i++) {
+                    delnameList.push(fileName2[i].id)
+                }
+                var jsondellist = JSON.stringify(delnameList)
+                console.log(delnameList);
+                $.ajax({
+                    url: "/delpic",
+                    type: "get",
+                    data: {
+                        "devicename": devicename,
+                        "foldername": foldername,
+                        "picname": jsondellist
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "0") {
+                            alert("删除失败，请刷新重试")
+                        } else {
+                            console.log("here")
+                            alert("删除成功")
+                            window.location.href = "/infofile?devicename=" + devicename + "&foldername=" + foldername;
+                        }
+                    },
+                    error: function (XMLHttpResponse, textStatus, errorThrown) {
+                        console.log(textStatus)
+                        console.log(errorThrown)
+                        console.log("error");
+                    }
+                })
+            }
+        })
+        $(".assessallpic").click(function () {
+            res = {{ result|tojson }}
+                res = eval(res)
+            var assess = 1;
+            for (var i = 0, j = res.length; i < j; i++) {
+                if (res[i][4] == 0) {
+                    assess = 0;
+                }
+            }
+            if (assess == 1) {
+                alert("暂无待评测文件！可在评估报告中查看评估结果！")
+            } else {
+                var index = layer.open({
+                    type: 1,
+                    title: "一键评测",
+                    area: ["300px", "200px"],
+                    content: $('#waittoassess')
+                })
+                var mycharts = echarts.init(document.getElementById("waitprocess"))
+                mycharts.showLoading()
+                $.ajax({
+                    url: "/assessallfish",
+                    type: "get",
+                    data: {
+                        "devicename": "{{ devicename }}",
+                        "foldername": "{{ foldername }}",
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        mycharts.hideLoading()
+                        layer.close(index)
+                        if (result == "1") {
+                            alert("评测完成！可在评估报告中查看评估所有评估结果！")
+                            window.location.href = "/infofile?devicename={{ devicename }}&foldername={{ foldername }}";
+                        } else {
+                            alert("评测过程中出现问题，请刷新重试！")
+                        }
+                    },
+                    error: function (XMLHttpResponse, textStatus, errorThrown) {
+                        mycharts.hideLoading()
+                        layer.close(index)
+                        console.log(textStatus)
+                        console.log(errorThrown)
+                        console.log("error");
+                    }
+                })
+            }
+        })
+        $(".downloadpdf").click(function () {
+            window.location.href = "/showassessresult?devicename={{ devicename }}&foldername={{ foldername }}"
+        })
+        $(".off").click(function () {
+            layer.close(index)
+        })
+        $(".all_show").click(function () {
+            $(".allpicshow")[0].style.display = "block";
+            $(".waitpicshow")[0].style.display = "none";
+            $(".donepicshow")[0].style.display = "none";
+        })
+        $(".done_show").click(function () {
+            $(".allpicshow")[0].style.display = "none";
+            $(".waitpicshow")[0].style.display = "none";
+            $(".donepicshow")[0].style.display = "block";
+        })
+        $(".wait_show").click(function () {
+            $(".allpicshow")[0].style.display = "none";
+            $(".waitpicshow")[0].style.display = "block";
+            $(".donepicshow")[0].style.display = "none";
+        })
+
+    }
+</script>
+<body>
+<div class="head-title">
+    <ul class="head-function" style="height: 73px;">
+        <li class="fun-list" style="margin-top: 12px;"><a href="/">首页</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/online">动态监测</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/infocollect"><span style="font-size:14px;color:white;">信息采集</span></a>
+        </li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/assess">质量评估</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/processmanage">设备管理</a></li>
+    </ul>
+</div>
+<div class="assess-all">
+    <div class="asses-block" style="margin-top: 0px;width: 12.6%;padding-left: 10px;">
+        <h2 class="assess-font" style="font-weight: 600;">信息采集</h2>
+        <li class="assess-li">
+            <a href="/infocollect">
+                <img class="not-choose" alt="" src="../static/images/overview.svg">
+                <img class="choose" alt="" src="../static/images/overview-hover.svg">
+                <span class="assess-span">概览</span>
+            </a>
+        </li>
+        <li class="assess-li">
+            <a href="/infoinstance">
+                <img class="not-choose" alt="" src="../static/images/overview.svg">
+                <img class="choose" alt="" src="../static/images/overview-hover.svg">
+                <span class="assess-span">货架列表</span>
+            </a>
+        </li>
+    </div>
+    <div class="assess-func" style="margin-top: 0px;padding: 10px;">
+        <div class="assess-func-div1" style="margin-top:-25px">
+            <h3 class="title" style="font-weight: 600;">文件列表</h3>
+        </div>
+        <div class="device-all" style="padding:30px">
+            <div class="upload">
+                <a href="/infofolder?devicename={{ devicename }}" class="btn btn-info" style="float: left;">返回上级</a>
+                <form action="/infofileupload?devicename={{ devicename }}&foldername={{ foldername }}" method="POST"
+                      enctype="multipart/form-data">
+                    <label style="margin-left: 50px;float: left;margin-top: 5px;">上传文件：</label>
+                    <input style="margin-top: 3px;float: left;" type="file" id="file_input" name="file" multiple/>
+                    <input style="float: left;" type="submit" value="上传" class="btn btn-info">
+                </form>
+                <input style="margin-left: 10px;" type="button" value="删除文件" class="btn btn-info del"/>
+                <input style="margin-left: 10px;" type="button" value="一键评测" class="btn btn-info assessallpic"
+                       title="该功能将会对该目录所有未评估鲳鱼图片进行评估"/>
+                <input style="margin-left: 10px;" type="button" value="评估报告" class="btn btn-info downloadpdf"/>
+                <input style="margin-left: 10px;" type="button" value="品质变化" class="btn btn-info assessdynamicshow"/>
+            </div>
+            <div style="margin-top: 10px">
+                <label style="font-size: 18px;"><input name="Fruit" type="radio" value="all" class="all_show"
+                                                       id="all_show"/>所有 </label>
+                <label style="font-size: 18px;margin-left: 10px;"><input name="Fruit" type="radio" value="done"
+                                                                         class="done_show"/>已评估</label>
+                <label style="font-size: 18px;margin-left: 10px;"><input name="Fruit" type="radio" value="wait"
+                                                                         class="wait_show"/>待评估</label>
+            </div>
+            <div class="allpicshow">
+                {% if length %}
+                    <div class="allpic" style="margin-top: 10px">
+                        <table border="1">
+                            {% for data in result %}
+                                {% if loop.index%5==0 %}
+                                    <td>
+                                        <img src="{{ data[3] }}" title="创建时间：{{ data[5] }}"
+                                             style="width:200px;height:150px">
+                                        <p style="text-align: center;margin-top: 3px;"><input type="checkbox"
+                                                                                              name="{{ data[2] }}"
+                                                                                              id={{ data[2] }}>{{ data[2] }}
+                                        </p>
+                                    </td>
+                                    <tr></tr>
+                                {% else %}
+                                    <td>
+                                        <img src="{{ data[3] }}" title="创建时间：{{ data[5] }}"
+                                             style="width:200px;height: 150px">
+                                        <p style="text-align: center;margin-top: 3px;"><input type="checkbox"
+                                                                                              name="{{ data[2] }}"
+                                                                                              id={{ data[2] }}>{{ data[2] }}
+                                        </p>
+                                    </td>
+                                {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="online-box">
+                        <span class="no-data">暂时无数据</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="donepicshow">
+                {% if length1 %}
+                    <div class="donepic" style="margin-top: 10px">
+                        <table border="1">
+                            {% for data in result1 %}
+                                {% if loop.index%5==0 %}
+                                    <td>
+                                        <img src="{{ data[3] }}" title="创建时间：{{ data[5] }}"
+                                             style="width:200px;height:150px">
+                                        <p style="text-align: center;margin-top: 3px;"><input type="checkbox"
+                                                                                              name="{{ data[2] }}"
+                                                                                              id={{ data[2] }}>{{ data[2] }}
+                                        </p>
+                                    </td>
+                                    <tr></tr>
+                                {% else %}
+                                    <td>
+                                        <img src="{{ data[3] }}" title="创建时间：{{ data[5] }}"
+                                             style="width:200px;height: 150px">
+                                        <p style="text-align: center;margin-top: 3px;"><input type="checkbox"
+                                                                                              name="{{ data[2] }}"
+                                                                                              id={{ data[2] }}>{{ data[2] }}
+                                        </p>
+                                    </td>
+                                {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="online-box">
+                        <span class="no-data">暂时无数据</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="waitpicshow">
+                {% if length2 %}
+                    <div class="waitpic" style="margin-top: 10px">
+                        <table border="1">
+                            {% for data in result2 %}
+                                {% if loop.index%5==0 %}
+                                    <td>
+                                        <img src="{{ data[3] }}" title="创建时间：{{ data[5] }}"
+                                             style="width:200px;height:150px">
+                                        <p style="text-align: center;margin-top: 3px;"><input type="checkbox"
+                                                                                              name="{{ data[2] }}"
+                                                                                              id={{ data[2] }}>{{ data[2] }}
+                                        </p>
+                                    </td>
+                                    <tr></tr>
+                                {% else %}
+                                    <td>
+                                        <img src="{{ data[3] }}" title="创建时间：{{ data[5] }}"
+                                             style="width:200px;height: 150px">
+                                        <p style="text-align: center;margin-top: 3px;"><input type="checkbox"
+                                                                                              name="{{ data[2] }}"
+                                                                                              id={{ data[2] }}>{{ data[2] }}
+                                        </p>
+                                    </td>
+                                {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="online-box">
+                        <span class="no-data">暂时无数据</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="confirmdel" id="confirmdel" style="display: none">
+        <div style="text-align: center;margin-top: 30px;">
+            <lable>确定删除所选文件？</lable>
+        </div>
+        <br>
+        <button class="btn btn-info confirm" style="margin-left:140px">确认</button>
+        <button class="btn btn-info off">取消</button>
+    </div>
+    <div class="visualdiv" id="visualdiv" style="width: 600px;height: 500px;display: none;">
+
+    </div>
+    <div class="waittoassess" id="waittoassess" style="display: none;text-align: center;">
+        <span>正在评测中...</span>
+        <div id="waitprocess" style="width:100px;height: 100px;margin-left: 80px;"></div>
+    </div>
+</div>
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>

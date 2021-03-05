@@ -1,0 +1,9 @@
+.info-img {
+    position: relative;
+    width: 46px;
+    height: 46px;
+    line-height: 40px;
+    border-radius: 50%;
+    padding: 3px;
+    margin: 7px auto auto auto;
+}

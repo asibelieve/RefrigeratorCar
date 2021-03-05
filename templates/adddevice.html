@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <base href="<%=basePath%>">
+    <title>添加设备</title>
+    <meta charset="utf-8">
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <link rel="stylesheet" href="../static/css/control.css">
+    <link rel="stylesheet" href="../static/css/assess.css">
+    <link rel="stylesheet" href="../static/css/deviceinfo.css">
+    <link rel="stylesheet" href="../static/css/adddevice.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <script src="../static/js/tokenpublic.js"></script>
+    <script src="../static/layer/layer.js"></script>
+    <script src="../static/js/adddevice.js"></script>
+    <script>
+        function del(p) {
+            p.parentElement.parentElement.parentElement.removeChild(p.parentElement.parentElement);
+        }
+
+        $(function () {
+            $(".append").click(function () {
+                $(".addlist").append("<tr><td><input class=\"sensoritem sensorname\" id=\"sensorname\" type=\"text\" placeholder=\"传感器名称\"></td>" +
+                    "                            <td>\n" +
+                    "                                <select class=\"sensortype\" style=\"height: 26px;width: 100px;\">\n" +
+                    "                                    <option value=\"volvo\">数值型</option>\n" +
+                    "                                    <option value=\"saab\">开关型(可操作)</option>\n" +
+                    "                                    <option value=\"opel\">定位型</option>\n" +
+                    "                                    <option value=\"audi\">图片型</option>\n" +
+                    "                                    <option value=\"audi\">开关型(不可操作)</option>\n" +
+                    "                                    <option value=\"audi\">档位型</option>\n" +
+                    "                                    <option value=\"audi\">视频型</option>\n" +
+                    "                                    <option value=\"audi\">字符串</option>\n" +
+                    "                                </select>\n" +
+                    "                            </td>\n" +
+                    "                            <td>\n" +
+                    "                                <select class=\"sensornum\" style=\"height: 26px;width: 100px;\">\n" +
+                    "                                    <option value=\"volvo\">0(小数位)</option>\n" +
+                    "                                    <option value=\"saab\">1(小数位)</option>\n" +
+                    "                                    <option value=\"opel\">2(小数位)</option>\n" +
+                    "                                    <option value=\"audi\">3(小数位)</option>\n" +
+                    "                                    <option value=\"audi\">4(小数位)</option>\n" +
+                    "                                </select>\n" +
+                    "                            </td>\n" +
+                    "                            <td><input class=\"sensoritem sensorunit\" id=\"sensorunit\" type=\"text\" placeholder=\"单位\"></td>\n" +
+                    "                            <td><input class=\"sensoritem sensororder\" id=\"sensororder\" type=\"text\" placeholder=\"排序编号\"></td>\n" +
+                    "                            <td><button style=\"background:#5bc0de\" class=\"delbutton\" value=\"删除\" onclick=\"del(this)\">删除</button></td>\n" +
+                    "                        </tr>")
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="head-title">
+    <ul class="head-function" style="height: 73px;">
+        <li class="fun-list" style="margin-top: 12px;"><a href="/">首页</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/online">动态监测</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/infocollect">信息采集</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/assess">质量评估</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/processmanage"><span
+                style="font-size:14px;color:white;">设备管理</span></a></li>
+    </ul>
+</div>
+<div class="assess-all">
+    <div class="asses-block" style="width: 12.6%">
+        <h2 class="assess-font" style="font-weight: 600;margin-left: 10px;">设备管理</h2>
+        <li class="assess-li">
+            <a class="Dynamic-a" href="/manageonline">
+                <img class="not-choose" alt="" src="../static/images/overview.svg">
+                <img class="choose" alt="" src="../static/images/overview-hover.svg">
+                <span class="assess-span">设备概览</span>
+            </a>
+        </li>
+        <li class="assess-li">
+            <a class="Dynamic-a" href="/adddevicetlink">
+                <img class="not-choose" alt="" src="../static/images/snapshot.svg">
+                <img class="choose" alt="" src="../static/images/snapshot-hover.svg">
+                <span class="assess-span">添加设备</span>
+            </a>
+        </li>
+    </div>
+    <div class="assess-func">
+        <div class="assess-func-div1">
+            <h3 class="title" style="font-weight: 600;">添加设备</h3>
+        </div>
+        <div class="addall">
+            <div class="edit-list">
+                <label class="subtitle">设备名称：</label>
+                <input type="text" class="device" id="devicenametlink" placeholder="请输入设备名称">
+            </div>
+            <div class="edit-list">
+                <label class="subtitle">链接协议：</label>
+                <select class="device protocol">
+                    <option value="volvo">MQTT</option>
+                    <option value="saab">HTTP</option>
+                    <option value="opel">TCP</option>
+                    <option value="audi">MB RTU</option>
+                    <option value="audi">MB TCP</option>
+                    <option value="audi">UDP</option>
+                    <option value="audi">TP500</option>
+                    <option value="audi">电信IoT</option>
+                    <option value="audi">CoAp</option>
+                </select>
+            </div>
+            <div class="edit-list">
+                <label class="subtitle">掉线延时：</label>
+                <input type="text" class="device" id="delay" placeholder="推荐值为60s">秒
+            </div>
+            <div class="edit-list-sensor">
+                <label class="subtitle">传感器：</label>
+                <button class="btn btn-info append">追加</button>
+                <table class="addlist" border="1">
+
+                </table>
+            </div>
+            <div class="edit-list">
+                <button class="btn btn-info confirmadd">确认添加</button>
+            </div>
+            <div class="confirmdel" id="confirmdel" style="display: none;width: 300px">
+                <div style="text-align: center;margin-top: 30px;">
+                    <lable>确认添加设备？</lable>
+                </div>
+                <br>
+                <button class="btn btn-info confirm" style="margin-left:90px">确认</button>
+                <button class="btn btn-info off">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

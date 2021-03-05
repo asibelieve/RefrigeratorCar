@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>信息采集</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/control.css">
+    <link rel="stylesheet" href="../static/css/assess.css">
+    <link rel="stylesheet" href="../static/css/assessinstance.css">
+    <link rel="stylesheet" href="../static/css/Dynamic.css">
+    <link rel="stylesheet" href="../static/css/info.css">
+    <script src="../static/js/jquery-3.3.1.js"></script>
+    <script src="../static/js/tokenpublic.js"></script>
+    <script src="../static/layer/layer.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+</head>
+<script type="text/javascript">
+    $(function () {
+        var index = 0;
+        var index2 = 0;
+        $(".adddevice").click(function () {
+            index2 = layer.open({
+                type: 1,
+                title: "添加设备",
+                area: ["400px", "200px"],
+                content: $('#adddevicehide')
+            })
+        })
+        $(".adddevicesubmit").click(function () {
+            layer.close(index2)
+            var name = document.getElementById("devicename").value
+            if (name == "") {
+                alert("名字不能为空")
+            } else {
+                $.ajax({
+                    url: "/adddevice",
+                    type: "get",
+                    data: {
+                        "devicename": name,
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "0") {
+                            alert("添加失败，请确认是否有重名设备！")
+                        } else {
+                            console.log("here")
+                            alert("添加成功")
+                            window.location.href = "/infoinstance";
+                        }
+                    },
+                    error: function (XMLHttpResponse, textStatus, errorThrown) {
+                        console.log(textStatus)
+                        console.log(errorThrown)
+                        console.log("error");
+                    }
+                })
+            }
+        })
+        $(".deldevice").click(function () {
+            index = layer.open({
+                type: 1,
+                title: "确认删除",
+                area: ["400px", "200px"],
+                content: $('#confirmdel')
+            })
+        })
+        $(".confirm").click(function () {
+            layer.close(index)
+            var wrap = document.querySelector('.device-all');
+            var deviceName = wrap.querySelectorAll('input:checked');
+            if (deviceName.length == 0) {
+                alert("无选择删除设备")
+            } else {
+                var delnameList = []
+                for (var i = 0; i < deviceName.length; i++) {
+                    delnameList.push(deviceName[i].id)
+                }
+                var jsondellist = JSON.stringify(delnameList)
+                console.log(delnameList);
+                $.ajax({
+                    url: "/deldevice",
+                    type: "get",
+                    data: {
+                        "devicename": jsondellist
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "0") {
+                            alert("删除设备出错,请刷新重试")
+                        } else {
+                            console.log("here")
+                            alert("删除成功")
+                            window.location.href = "/infoinstance";
+                        }
+                    },
+                    error: function (XMLHttpResponse, textStatus, errorThrown) {
+                        console.log(textStatus)
+                        console.log(errorThrown)
+                        console.log("error");
+                    }
+                })
+            }
+        })
+        $(".off").click(function () {
+            layer.close(index)
+        })
+    })
+</script>
+<body>
+<div class="head-title">
+    <ul class="head-function" style="height: 73px;">
+        <li class="fun-list" style="margin-top: 12px;"><a href="/">首页</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/online">动态监测</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/infocollect"><span style="font-size:14px;color:white;">信息采集</span></a>
+        </li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/assess">质量评估</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/processmanage">设备管理</a></li>
+    </ul>
+</div>
+<div class="assess-all">
+    <div class="asses-block" style="margin-top: 0px;width: 12.6%;padding-left: 10px;">
+        <h2 class="assess-font" style="font-weight: 600;">信息采集</h2>
+        <li class="assess-li">
+            <a href="/infocollect">
+                <img class="not-choose" alt="" src="../static/images/overview.svg">
+                <img class="choose" alt="" src="../static/images/overview-hover.svg">
+                <span class="assess-span">概览</span>
+            </a>
+        </li>
+        <li class="assess-li">
+            <a href="/infoinstance">
+                <img class="not-choose" alt="" src="../static/images/overview.svg">
+                <img class="choose" alt="" src="../static/images/overview-hover.svg">
+                <span class="assess-span">货架列表</span>
+            </a>
+        </li>
+    </div>
+    <div class="assess-func" style="margin-top: 0px;padding: 10px;">
+        <div class="assess-func-div1" style="margin-top:-25px">
+            <h3 class="title" style="font-weight: 600">货架列表</h3>
+        </div>
+        <div class="operator" style="margin-left: 20px;margin-top: 20px;">
+            <input type="button" value="添加货架" class="btn btn-info adddevice"/>
+            <input type="button" value="删除货架" class="btn btn-info deldevice" style="margin-left: 10px;"/>
+        </div>
+        <div class="device-all">
+            {% if length %}
+                {% for data in result %}
+                    <div class="online-box" style="height: 65px">
+                        <div class="app-manage-md50" style="width:5% ;">
+                            <input type="checkbox" id="{{ data[0] }}" style="margin-top: 30px;">
+                        </div>
+                        <div class="app-manage-md50">
+                            <div class="info-img sensorState">
+                                <img src="../static/images/file.jpg" style="width:50px;margin-top:5px">
+                            </div>
+                        </div>
+                        <div class="app-manage-md300 sensorState" title="{{ data[0] }}"
+                             style="width: 8%;margin-top: 23px;">
+                            {{ data[0] }}
+                        </div>
+                        <div class="app-manage-md230 sensorState" style="width: 20%;margin-top: 23px;">
+                            <p class="app-manage-p">创建日期：<span>{{ data[1] }}</span></p>
+                        </div>
+                        <div class="app-manage-md230 sensorState"
+                             style="margin-left: 50px;width: 10%;margin-top: 23px;">
+                            <p class="app-manage-p">所有者：<span>{{ data[2] }}</span></p>
+                        </div>
+                        <div class="detail-info" style="width: 40%;">
+                            <a class="Dynamic-a1" href="/infofolder?devicename={{ data[0] }}">查看详情</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="online-box">
+                    <span class="no-data">暂时无数据</span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="adddevicehide" id="adddevicehide" style="display: none">
+    <div style="margin-left: 50px;margin-top: 30px;">
+        <lable>货架名称：</lable>
+        <input type="text" id="devicename">
+    </div>
+    <br>
+    <input type="submit" class="btn btn-info adddevicesubmit" id="adddevicesubmit"
+           style="margin-left: 160px;width: 80px;">
+</div>
+<div class="confirmdel" id="confirmdel" style="display: none">
+    <div style="text-align:center;margin-top: 30px;">
+        <lable>确定删除所选货架？</lable>
+    </div>
+    <br>
+    <button class="btn btn-info confirm" style="margin-left:140px">确认</button>
+    <button class="btn btn-info off">取消</button>
+</div>
+</body>
+</html>

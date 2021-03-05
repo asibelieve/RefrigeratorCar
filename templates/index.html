@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=2">
+    <title>面向冷藏货架的冰鲜水产品质量评估系统</title>
+    <meta name="keywords" content="面向冷藏货架的冰鲜水产品质量评估系统">
+    <meta name="description" content="面向冷藏货架的冰鲜水产品质量评估系统">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="../static/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../static/css/home-global.css">
+    <meta name="applicable-device" content="pc,mobile">
+    <link href="../static/css/home.css" rel="stylesheet" media="screen">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <script src="../static/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        var nonedata = {
+            data:{{ token|tojson }},
+            key:{{ key|tojson }},
+            operator:{{ operator|tojson }}
+        }
+    </script>
+    <script src="../static/js/index.js"></script>
+    <style>
+        html {
+            font-family: 'pingfang SC', 'helvetica neue', arial, 'hiragino sans gb',
+            'microsoft yahei ui', 'microsoft yahei', simsun, sans-serif;
+            font-size: 14px;
+            color: #333
+        }
+
+        body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, hr, input,
+        li, ol, p, td, textarea, th, ul {
+            margin: 0;
+            padding: 0
+        }
+
+        .h_panel, .login_banner {
+            height: 40px;
+            background-color: #2b303b;
+            padding: 0 20px;
+            min-width: 980px
+        }
+
+        .h_logo {
+            width: 100px;
+            height: 40px;
+            background-image: url(../static/images/logo-white.svg);
+            margin-top: 0px;
+            background-position: 0% 0%;
+            background-size: 100% 100%;;
+            background-repeat: no-repeat
+        }
+
+        .h_logo a {
+            display: block;
+            overflow: hidden;
+            text-indent: -10000px;
+            outline: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .login_banner_panel {
+            width: 100%;
+            height: 588px;
+            background-image: url(../static/images/background.jpg);
+            position: absolute;
+            left: 0px;
+            top: 98px;
+            padding: 0px -20px;
+            background-repeat: no-repeat;
+            background-position: 0% 0%;
+            background-size: 100% 100%;;
+        }
+
+        .login_banner_panel a {
+            display: block;
+            height: 588px;
+            padding: 0px 0px;
+            text-indent: -10000px;
+        }
+
+        .c-nav-mod .c-nav-bm-categories .presentation > a {
+            display: inline-block;
+            padding: 0 15px;
+            color: #fff;
+            line-height: 54px;
+            height: 54px;
+            font-size: 14px;
+            -webkit-transition: background-color .4s;
+            transition: background-color .4s
+        }
+
+        .c-nav-mod .c-nav-bm-categories ul {
+            height: 54px;
+            padding: 0 0px;
+        }
+
+        .c-nav-mod .c-nav-bm-categories .c-nav-hot-icon {
+            width: 27px;
+            height: 16px;
+            display: inline-block;
+            background-image: url(http://imgcache.qq.com/open_proj/proj_qcloud_v2/gateway/portal/css/sprite/global-201911291451.svg);
+            margin-left: 2px;
+            margin-bottom: -3px;
+            background-position: 75.09% 61.85000000000001%;
+            background-size: 1111.111111111111% 1787.5%;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+<div class="body">
+    <div id="navigationBar" data-type="cn_zh"
+         class="c-nav-wrap c-nav c-nav-air-sub" data-style="air">
+        <div class="c-nav-mod c-nav-mod-pc ">
+            <div class="h_panel">
+                <div class="h_logo">
+                    <a href="/"></a>
+                </div>
+            </div>
+            <div id="qcTopNavSndLevel" class="c-nav-bottom">
+                <div id="qcTopNavMain" class="c-nav-bm-categories">
+                    <ul class="c-nav-list J-qcTopNavList" style="visibility: visible;">
+                        <li class="presentation J-qcTopNavItem" data-id="price"
+                            data-action="link" data-title="动态监测" style="display: block;">
+                            <a href="/online">
+                                动态监测
+                                <i class="c-nav-hot-icon"></i>
+                            </a>
+                        </li>
+                        <li class="presentation J-qcTopNavItem" data-id="document"
+                            data-action="link" data-title="信息采集" style="display: block;">
+                            <a href="/infocollect">信息采集</a>
+                            信息采集 </a>
+                        </li>
+                        <li class="presentation J-qcTopNavItem" data-id="market"
+                            data-action="expand" data-title="质量评估"
+                            style="display: block;">
+                            <a href="/assess"> 质量评估</a>
+                        </li>
+                        <li class="presentation J-qcTopNavItem" data-id="developer"
+                            data-action="expand" data-title="过程管理" style="display: block;">
+                            <a href="/processmanage">
+                                设备管理 </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="qcTopNavSndOpera" class="c-nav-bm-right"
+                     style="visibility: visible;">
+                    {% if key=="" %}
+                        <a href="/login"
+                           hotrep="hp.pc.topnav.register" style="" rel="nofollow"
+                           class="nav-register-btn c-btn J-qcTopNavBtnRegister">登录</a>
+                    {% else %}
+                        <a href="/quit"
+                           hotrep="hp.pc.topnav.register" style="" rel="nofollow"
+                           class="nav-register-btn c-btn J-qcTopNavBtnRegister">退出</a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- banner start -->
+<div class="c-hero">
+    <div id="heroBanner" class="mod-hero">
+        <div class="hero-inner">
+            <div role="list" class="hero-img">
+                <div role="listitem" hotrep="hp.banner1"
+                     data-bg="https://main.qcloudimg.com/raw/49f722f0d3b8bc817a23638eb42568e3.jpg"
+                     data-mbg="https://main.qcloudimg.com/raw/3edc4d24ecd016ddc5d94b8aad4242e8.png"
+                     data-noaside="1" data-bgcolor="#020d2d"
+                     data-href="https://cloud.tencent.com/act/event/vipkid?from=11027"
+                     target="_blank" class="img-item J-hero-img type-light active"
+                     style="background-image: url(../static/images/background.jpg); background-color: rgb(2, 13, 45); display: inline-block; position: absolute; top: 0px; left: 0px;">
+                    <div class="wrap-canvas J-bannerWrappedCanvas">
+                        <canvas class="layer1" width="0" height="0"
+                                style="display: block;"></canvas>
+                    </div>
+                    <div class="hero-text">
+                        <div class="hero-desc">
+                            <h2>面向冷藏货架的冰鲜水产品质量评估系统</h2>
+                        </div>
+                        <div class="hero-text-inner" style="margin-top:50px">
+                            <div class="hero-text-con">
+                                <h2>
+                                    <span class="piece">冰鲜水产品质量评估系统</span>
+                                    <hr style="margin-top:10px;height:3px;background:white;width:520px"></hr>
+                                    <h3><span style="font-size:30px;margin-top:-10px">为您打造专业水产质量评估
+										<br>让您买的放心，吃的安心！</span></h3>
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="hero-text-inner">
+                            <div class="hero-text-con">
+                                <h2>
+										<span class="piece">
+											<ul style="margin-left:840px">
+												<li class="rno-2-hero-nav-item rno-2-hero-nav-item-active"
+                                                    style="background-image: url(https://main.qcloudimg.com/raw/47c5fa6fe4cef28c895dae07b1a07c4f/xxsl.png)">
+													<p style="font-size:20px;">采用深度学习框架<br>进行水产品评估</p>
+													<span class="rno-2-hero-nav-item-category">质量评估</span>
+												</li>	
+												<li class="rno-2-hero-nav-item rno-2-hero-nav-item-active"
+                                                    style="background-image: url(https://main.qcloudimg.com/raw/bd81bcf401eb0a7394c0185681577616/yrz.png)">
+													<p style="font-size:20px;">采用物联网设备进<br>行数据采集</p>
+													<span class="rno-2-hero-nav-item-category" style="margin-top:96px">数据采集</span>
+												</li>	
+												<li class="rno-2-hero-nav-item rno-2-hero-nav-item-active"
+                                                    style="background-image: url(https://main.qcloudimg.com/raw/5bc8056232f427ed09e80e2070ba36e4/tvp.png)">
+													<p style="font-size:20px;">采用神经网络进行<br>品质劣变预测</p>
+													<span class="rno-2-hero-nav-item-category" style="margin-top:195px">劣变预测</span>
+												</li>												
+											</ul>
+										</span>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="rno-2-event-panels" id="section-hot">
+            <div class="rno-2-event-lattice-card rno-2-event-lattice-cols-4 rno-2-event-lattice-without-margin">
+                <div class="rno-2-event-lattice-cell">
+                    <a role="listitem" hotrep="hp.belowbanner.news1" href="/online"
+                       target="_blank" class="rno-2-event-panel">
+                        <div class="rno-2-event-cont">
+                            <h3 class="rno-2-event-panel-title">动态监测</h3>
+                            <p class="rno-2-event-panel-desc">实时显示关键因子</p>
+                            <img src="https://main.qcloudimg.com/raw/57fe551652c75efdd5b23ae68da53282.svg" alt="新手入门"
+                                 class="rno-2-event-panel-icon">
+                            <img src="https://main.qcloudimg.com/raw/57fe551652c75efdd5b23ae68da53282.svg" alt="新手入门"
+                                 class="rno-2-event-panel-icon-m">
+                        </div>
+                    </a>
+                </div>
+                <div class="rno-2-event-lattice-cell">
+                    <a role="listitem" hotrep="hp.belowbanner.news2"
+                       href="/infocollect" target="_blank" class="rno-2-event-panel">
+                        <div class="rno-2-event-cont">
+                            <h3 class="rno-2-event-panel-title">智能决策</h3>
+                            <p class="rno-2-event-panel-desc">环境信息采集与品质评估</p>
+                            <img src="https://main.qcloudimg.com/raw/3b340927684bc805e5c553c291f8fbf9.svg" alt="免费产品"
+                                 class="rno-2-event-panel-icon">
+                            <img src="" alt="免费产品" class="rno-2-event-panel-icon-m">
+                        </div>
+                    </a>
+                </div>
+                <div class="rno-2-event-lattice-cell">
+                    <a role="listitem" hotrep="hp.belowbanner.news3"
+                       href="processmanage" target="_blank"
+                       class="rno-2-event-panel">
+                        <div class="rno-2-event-cont">
+                            <h3 class="rno-2-event-panel-title">过程管理</h3>
+                            <p class="rno-2-event-panel-desc">编辑、新建设备</p>
+                            <img src="https://main.qcloudimg.com/raw/fdc4bdac57d7f64a2f82713739663c3e.svg" alt="开发者扶持"
+                                 class="rno-2-event-panel-icon">
+                            <img src="" alt="开发者扶持" class="rno-2-event-panel-icon-m">
+                        </div>
+                    </a>
+                </div>
+                <div class="rno-2-event-lattice-cell">
+                    <a role="listitem" hotrep="hp.belowbanner.news4"
+                       href="/assess" target="_blank"
+                       class="rno-2-event-panel">
+                        <div class="rno-2-event-cont">
+                            <h3 class="rno-2-event-panel-title">品质预测</h3>
+                            <p class="rno-2-event-panel-desc">品质劣变预测</p>
+                            <img src="https://main.qcloudimg.com/raw/31c4fb4bcde38df4c46ba27b2650c6c9.svg" alt="域名特惠"
+                                 class="rno-2-event-panel-icon">
+                            <img src="" alt="域名特惠" class="rno-2-event-panel-icon-m">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h1 style="text-align:center;font-size:30px">系统特点</h1>
+        <hr style="margin-top:10px;height:3px;background:black;width:86%;margin-left:7%;margin-bottom:5px"/>
+    </div>
+    <div class="c-section bg-color home-event-mod c-hidden-xs">
+        <div class="c-section-inner">
+            <div role="list" class="c-grid">
+                <div role="presentation" class="c-g-5">
+                    <div role="presentation" class="home-event-item">
+                        <a role="listitem" hotrep="hp.belowbanner.news1"
+                           href="/">
+                            <div class="home-event-item-con">
+                                <h2 class="home-event-item-tit">
+                                    <span>多样的业务服务</span> <span class="mobile-text">多样的业务服务</span>
+                                    <i class="home-event-icon-new">HOT</i>
+                                </h2>
+                                <div class="home-event-item-txt">
+                                    构建服务于生厂商、经销商、物流商、零售商的水产品品质溯源与管控系统，满足各对象需求
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div role="presentation" class="c-g-5">
+                    <div role="presentation" class="home-event-item">
+                        <a role="listitem" hotrep="hp.belowbanner.news2"
+                           href="/">
+                            <div class="home-event-item-con">
+                                <h2 class="home-event-item-tit">
+                                    <span>领先的质控体系</span> <span class="mobile-text">领先的质控体系</span>
+                                    <i class="home-event-icon-new">HOT</i>
+                                </h2>
+                                <div class="home-event-item-txt">
+                                    利用深度学习创建质量管控模型，便于创建各类实验方案，标准化、便捷化使用设施中的设备
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div role="presentation" class="c-g-5">
+                    <div role="presentation" class="home-event-item">
+                        <a role="listitem" hotrep="hp.belowbanner.news3"
+                           href="/">
+                            <div class="home-event-item-con">
+                                <h2 class="home-event-item-tit">
+                                    <span>柔性的实验方案</span> <span class="mobile-text">柔性的实验方案</span>
+                                </h2>
+                                <div class="home-event-item-txt">整合设施内各个平台，创建柔性实验方案</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div role="presentation" class="c-g-5">
+                    <div role="presentation" class="home-event-item">
+                        <a role="listitem" hotrep="hp.belowbanner.news4"
+                           href="/">
+                            <div class="home-event-item-con">
+                                <h2 class="home-event-item-tit">
+                                    <span>丰富的数据表现</span> <span class="mobile-text">丰富的数据资源</span>
+                                </h2>
+                                <div class="home-event-item-txt">
+                                    将影响品质的关键因子实时展现，图表展现数据，便于进行管控分析
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div role="presentation" class="c-g-5">
+                    <div role="presentation" class="home-event-item">
+                        <a role="listitem" hotrep="hp.belowbanner.news5"
+                           href="/">
+                            <div class="home-event-item-con">
+                                <h2 class="home-event-item-tit">
+                                    <span>合理的品质预测</span> <span class="mobile-text">合理的品质预测</span>
+                                </h2>
+                                <div class="home-event-item-txt">
+                                    设计底层合理的神经网络预测品质，便于及时对水产品质进行管控
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="background:#2e3033;height:150px">
+    <div style="color:white;padding:30px;margin-left:100px">
+			<span style="padding-left:100px">
+				<ul class="bottom-item">
+					<li class="bottom-title">动态监测</li>
+					<li class="bottom-zititle">设备详情</li>
+					<li class="bottom-zititle">报警记录</li>
+					<li class="bottom-zititle">历史查询</li>
+				</ul>
+				<ul class="bottom-item">
+					<li class="bottom-title">信息采集</li>
+					<li class="bottom-zititle">货架列表</li>
+					<li class="bottom-zititle">一键评测</li>
+                    <li class="bottom-zititle">品质变化</li>
+				</ul>
+				<ul class="bottom-item">
+					<li class="bottom-title">设备管理</li>
+					<li class="bottom-zititle">添加设备</li>
+					<li class="bottom-zititle">编辑设备</li>
+					<li class="bottom-zititle">删除设备</li>
+				</ul>			
+				<ul class="bottom-item">
+					<li class="bottom-title">品质预测</li>
+					<li class="bottom-zititle">劣变评估</li>
+					<li class="bottom-zititle">品质变化动态展示</li>
+				</ul>
+				<ul class="bottom-item">
+					<li class="bottom-title">管理与支持</li>
+					<li class="bottom-zititle">加入我们</li>
+					<li class="bottom-zititle">产品建议与反馈</li>
+					
+				</ul>
+				<ul class="bottom-item">
+					<li class="bottom-title"></li>
+					<li class="bottom-zititle">CopyRight@2020-2021</li>
+					<li class="bottom-zititle">729LAB All Rights</li>
+					<li class="bottom-zititle">Reserved</li>
+				</ul>
+			</span>
+    </div>
+</div>
+</body>
+</html>

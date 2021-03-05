@@ -1,0 +1,205 @@
+@charset "UTF-8";
+.sensorBack {
+    text-decoration: none;
+    position: relative;
+    float: left;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 5px;
+    border-radius: 2px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #1694f3;
+    margin-left: 20px;
+}
+
+.devicename {
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.xulieno {
+    color: #666;
+    font-size: 17px;
+    margin-left: 20px;
+}
+
+.sensorHeadI {
+    position: relative;
+    height: 26px;
+    line-height: 26px !important;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin: 12px 0;
+    padding: 2px 10px;
+    border: 1px solid #d7d7d7;
+}
+
+@charset "UTF-8";
+.Dynamic-a {
+    text-decoration: none;
+}
+
+.Dynamic-a1 {
+    text-decoration: none;
+    margin-left: 150px;
+}
+
+.line {
+    text-decoration: none;
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.app-manage-md50 {
+    position: relative;
+    width: 50px;
+    text-align: center;
+    float: left;
+    z-index: 9;
+    margin-left: 20px;
+}
+
+.app-manage-img {
+    position: relative;
+    width: 46px;
+    height: 46px;
+    line-height: 40px;
+    border-radius: 50%;
+    padding: 3px;
+    margin: 7px auto auto auto;
+    overflow: hidden;
+}
+
+.OffLine .sensorState, .OffLine .sensorState p {
+    color: #b1b1b1 !important;
+}
+
+.app-manage-md300 {
+    position: relative;
+    float: left;
+    width: 130px;
+    text-align: left;
+    z-index: 9;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: -8px;
+    margin-left: 30px;
+}
+
+.app-manage-md250 {
+    position: relative;
+    width: 230px;
+    text-align: left;
+    float: left;
+    z-index: 9;
+    padding: 10px 0 10px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: -15px;
+}
+
+.app-manage-md250 .app-manage-copy {
+    font-size: 14px;
+}
+
+.app-manage-md250 .app-manage-p {
+    line-height: 20px;
+    font-size: 14px;
+}
+
+.app-manage-p {
+    color: #666;
+    margin-left: 20px;
+    font-size: 15px;
+}
+
+.app-manage-md230 {
+    position: relative;
+    width: 280px;
+    text-align: left;
+    float: left;
+    z-index: 9;
+    padding-left: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 9px;
+}
+
+.online-box {
+    width: 100%;
+    height: 65px;
+    background-color: white;
+    margin-top: 20px;
+}
+
+.online-offline {
+    margin-top: 20px;
+}
+
+.detail-info {
+    position: relative;
+    float: left;
+    width: 300px;
+    margin-top: 23px;
+}
+
+.sensorName-p {
+    margin-bottom: -10px;
+    margin-top: 15px;
+}
+
+.sensorD {
+    display: inline-block;
+    font-size: 24px;
+    font-weight: 700;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-top: 20px;
+    float: left;
+}
+
+.dis-left {
+    margin-left: 20px;
+}
+
+.tlink-Chart {
+    position: relative;
+    width: auto;
+    height: 60px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    float: right;
+    margin-top: 3px;
+    margin-right: 30px;
+}
+
+.tlinkChart {
+    position: relative;
+    width: 90px;
+    height: 60px;
+    line-height: 60px;
+    display: inline-block;
+    color: #1694f3;
+    text-align: center;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.layui-icon {
+    font-family: layui-icon !important;
+    font-size: 18px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-left: 20px;
+}
+
+.sensor-all {
+    overflow: scroll;
+    height: 80%;
+}

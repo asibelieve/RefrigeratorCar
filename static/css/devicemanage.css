@@ -1,0 +1,14 @@
+.update {
+    width: 20%;
+    float: left;
+    margin-left: 30px;
+    margin-top: 23px;
+    font-size: 18px;
+}
+
+.updateDevicetlink {
+    text-decoration: none;
+    font-size: 16px;
+    color: cornflowerblue;
+    margin-left: 20px;
+}

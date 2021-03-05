@@ -1,0 +1,56 @@
+.all {
+    background: white;
+    margin-top: 60px;
+    padding-top: 10px;
+}
+
+.edit-list {
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+.subtitle {
+    float: left;
+    width: 100px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.device {
+    width: 200px;
+    height: 20px;
+}
+
+.sensor {
+    margin-left: 85px;
+}
+
+.sensoritem {
+    width: 100px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+.confirmbtn {
+    padding-bottom: 20px;
+}
+
+.btn {
+    background-color: #1694f3;
+    margin-top: 20px;
+    width: 100px;
+    height: 30px;
+}
+
+.confirmupdate {
+    background-color: #1694f3;
+    margin-top: 20px;
+    width: 100px;
+    height: 30px;
+}
+
+.delbutton {
+    background: #1694f3;
+    width: 70px;
+    height: 30px;
+}

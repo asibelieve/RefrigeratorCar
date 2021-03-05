@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>信息采集</title>
+    <link rel="stylesheet" href="../static/css/control.css">
+    <link rel="stylesheet" href="../static/css/assess.css">
+    <script src="../static/js/jquery-3.3.1.js"></script>
+    <script src="../static/My97DatePicker/WdatePicker.js"></script>
+    <script src="../static/js/tokenpublic.js"></script>
+</head>
+<body>
+<div class="head-title">
+    <ul class="head-function">
+        <li class="fun-list"><a href="/">首页</a></li>
+        <li class="fun-list"><a href="/online">动态监测</a></li>
+        <li class="fun-list"><a href="/infocollect"><h2 style="font-size:14px;color:white;">信息采集</h2></a></li>
+        <li class="fun-list"><a href="/assess">质量评估</a></li>
+        <li class="fun-list"><a href="/processmanage">设备管理</a></li>
+    </ul>
+</div>
+<div class="assess-all">
+    <div class="asses-block">
+        <h2 class="assess-font">信息采集</h2>
+        <li class="assess-li">
+            <a href="/infocollect" class="assess-href">
+                <img class="not-choose" alt="" src="../static/images/overview.svg">
+                <img class="choose" alt="" src="../static/images/overview-hover.svg">
+                <span class="assess-span">概览</span>
+            </a>
+        </li>
+        <li class="assess-li" class="assess-href">
+            <a href="/infoinstance" style="text-decoration: none;">
+                <img class="not-choose" alt="" src="../static/images/snapshot.svg">
+                <img class="choose" alt="" src="../static/images/snapshot-hover.svg">
+                <span class="assess-span">货架列表</span>
+            </a>
+        </li>
+    </div>
+    <div class="assess-func" style="height: 400%">
+        <div class="assess-func-div1">
+            <h3 class="title">概览</h3>
+        </div>
+        <div class="assess-func-div2">
+            <div class="div2-son" style="height: 2500px">
+                <div class="son-title">
+                    <p style="text-indent: 2em;padding: 20px;font-size: 18px;padding-bottom: 0px">
+                        为了让用户更方便快捷的实现对鲳鱼的管理评估等，我们特地开发了信息采集模块，用户可以在这里批量评测，查看评估报告，品质动态化监测等！</p>
+                    <p style="padding-left: 20px;font-size: 18px;">1.货架管理</p>
+                    <p style="text-indent: 2em;font-size: 18px;padding-left: 20px;padding-right: 20px;">
+                        在这里我们可以新建货架，删除货架，每个货架代表的含义为一个真实环境中的冷藏货架，每个货架上面摆放着同一种类的冰鲜水产品。</p>
+                    <div style="display: table-cell;text-align: center;width: 1000px;">
+                        <img src="../static/images/list.png" style="width: 700px;">
+                    </div>
+                    <p style="padding-left: 20px;font-size: 18px;">2.鲳鱼管理</p>
+                    <p style="text-indent: 2em;font-size: 18px;padding-left: 20px;padding-right: 20px;">
+                        每个鲳鱼货架上可摆放成百上千条鲳鱼，而鲳鱼文件夹就是分别管理每条鲳鱼，每个鲳鱼的编号即为文件夹编号，每个文件夹里的内容即为每条鲳鱼各个时间段的图片！</p>
+                    <div style="display: table-cell;text-align: center;width: 1000px;">
+                        <img src="../static/images/folder.png" style="width: 700px;">
+                    </div>
+                    <p style="padding-left: 20px;font-size: 18px;">3.快速评测</p>
+                    <p style="text-indent: 2em;font-size: 18px;padding-left: 20px;padding-right: 20px;">
+                        在文件列表下，我们可以看到所有上传在该文件夹下的鲳鱼图片，我们可以继续上传图片，也可以删除存在的图片。在这里，我们还可以根据类别查看有没有需要评估的鲳鱼，如果有，则可以一键评测，将该文件夹下所有未评测文件进行评测！</p>
+                    <div style="display: table-cell;text-align: center;width: 1000px;">
+                        <img src="../static/images/file.png" style="width: 700px;">
+                    </div>
+                    <p style="padding-left: 20px;font-size: 18px;">4.评估报告</p>
+                    <p style="text-indent: 2em;font-size: 18px;padding-left: 20px;padding-right: 20px;">
+                        点击评估报告，我们可以查看该文件夹下所有已评估的文件的评估报告，查看其新鲜度。</p>
+                    <div style="display: table-cell;text-align: center;width: 1000px;">
+                        <img src="../static/images/assess.png" style="width: 700px;">
+                    </div>
+                    <p style="padding-left: 20px;font-size: 18px;">5.品质变化</p>
+                    <p style="text-indent: 2em;font-size: 18px;padding-left: 20px;padding-right: 20px;">
+                        点击品质变化按钮，一键查看该鲳鱼近期新鲜度的变化。</p>
+                    <div style="display: table-cell;text-align: center;width: 1000px;">
+                        <img src="../static/images/change.png" style="width: 700px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

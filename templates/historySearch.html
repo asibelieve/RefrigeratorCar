@@ -1,0 +1,266 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <title>历史数据</title>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <!--
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    -->
+    <link rel="stylesheet" href="../static/css/history.css">
+    <!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../static/js/tokenpublic.js"></script>
+    <!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- 引入echarts -->
+    <script src="../static/js/echarts.common.min.js"></script>
+    <link href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="../static/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+        function searchdata() {
+
+
+            var starttime = $("#starttime").val(); //获取开始时间
+            var endtime = $("#endtime").val(); //获取结束时间
+            if (starttime >= endtime) {
+                alert("开始时间不能大于结束时间,请重新输入！");
+                $("#starttime").val(starttime);
+                $("#endtime").val(endtime);
+            } else {
+                var myChart = echarts.init(document.getElementById('main'));
+                //发送ajax登录请求
+                myChart.showLoading();
+                $.ajax({
+                    url: "/historysearch",
+                    type: "get",
+                    data: {
+                        "starttime": starttime,
+                        "endtime": endtime,
+                        "deviceid":{{ res2["deviceId"]|tojson}},
+                        "sensorid":{{ res2["sensorId"]|tojson }}
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        $("#request-tr").html("");
+                        $("#none-data").html("");
+                        if (result == "123") {
+                            document.getElementById('history-data-all').style.display = "none";
+                            $("#none-data").html("抱歉！该段时间没有数据！");
+                            myChart.hideLoading();
+                        } else {
+                            res = eval(result)
+                            var x = [];
+                            var y = [];
+                            for (j = 0; j < res.length; j++) {
+                                key = res[j]["addTime"]
+                                val = res[j]["val"]
+                                x.push(key);
+                                y.push(val);
+                                $("#request-tr").append("<tr><td>" + key + "</td><td>" + val + "</td></tr>");
+                            }
+                            x = x.reverse()
+                            y = y.reverse()
+                            document.getElementById('history-data-all').style.display = "block"
+                            let max = parseFloat(y[0]), min = parseFloat(y[0]), ave = 0, sep = 0;
+                            for (let i = 0; i < y.length; i++) {
+                                let tmp = parseFloat(y[i]);
+                                if (max < tmp) {
+                                    max = tmp;
+                                }
+                                if (min > tmp) {
+                                    min = tmp;
+                                }
+                                ave = ave + tmp;
+                            }
+                            ave = ave / y.length;
+                            sep = max - min;
+                            $("#max").html(max);
+                            $("#min").html(min);
+                            $("#ave").html(ave);
+                            $("#sep").html(sep);
+                            var option = {
+                                xAxis: {
+                                    type: 'category',
+                                    data: x
+                                },
+                                yAxis: {
+                                    type: 'value'
+                                },
+                                series: [{
+                                    data: y,
+                                    type: 'line',
+                                    smooth: true
+                                }],
+                                tooltip: {
+                                    trigger: 'axis',
+                                    axisPointer: {
+                                        type: 'cross',
+                                        label: {
+                                            backgroundColor: '#6a7985'
+                                        }
+                                    }
+                                },
+                            };
+                            myChart.hideLoading();
+                            myChart.setOption(option);
+                        }
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                })
+            }
+
+        }
+
+        $(function () {
+            var flag =
+            {{ flag|tojson }}
+            if (flag == "00") {
+                var startDate =
+                {{ startDate |tojson}}
+                var endDate = {{ endDate|tojson }}
+                    $("#starttime").val(startDate);
+                $("#endtime").val(endDate);
+                $("#search").click();//初始化曲线
+            } else {
+                alert("该传感器尚无数据")
+                window.location.href = "/online"
+            }
+        });
+    </script>
+</head>
+<body>
+{% if flag=="01" %}
+    <span>无相应传感器数据</span>
+{% else %}
+    <div class="sensorall">
+        <div class="title">
+            <h3 class="title-span">历史数据</h3>
+        </div>
+        <div class="historybody">
+            <div class="sensorinfo">
+                <div class="sensorinfo-title">传感器信息</div>
+                <div class="sensor-info">
+                    <div class="sensor-img">
+                        <img class="imageset" src="../static/images/temperature.png">
+                    </div>
+                    <div class="sensor-text">
+                        <p class="p1" id="sensor-text-p1">{{ res2["sensorName"] }}</p>
+                        <p class="p2" title="{{ res2["deviceName"] }}">所属设备：{{ res2["deviceName"] }}</p>
+                    </div>
+                </div>
+                <div class="sensor-line">
+                    <div class="sensor-title">传感器类型</div>
+                    <div class="sensor-val">数值型</div>
+                </div>
+                <div class="sensor-line">
+                    <div class="sensor-title">当前状态</div>
+                    <div class="sensor-val">
+                        {% if res2["isLine"] == 1 %}
+                            已连接
+                        {% else %}
+                            未连接
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="sensor-line">
+                    <div class="sensor-title">当前值</div>
+                    <div class="sensor-val" id="sensor-val">{{ res2["value"] }}{{ res2["unit"] }}</div>
+                </div>
+                <div class="sensor-line">
+                    <div class="sensor-title">更新时间</div>
+                    <div class="sensor-val">{{ res2["updateDate"] }}</div>
+                </div>
+            </div>
+            <div class="history-data">
+                <div class="sensorinfo-title">历史数据</div>
+                <div class="history-data-all" id="history-data-all">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td>更新时间</td>
+                            <td>数据(单位：{{ res2["unit"] }})</td>
+                        </tr>
+                        </thead>
+                        <tbody id="request-tr">
+                        {% if res1["flag"]=="01" %}
+                            <tr>
+                                <td colspan="2">该时间段无相关数据</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="none-data" id="none-data">
+
+                </div>
+            </div>
+            <div class="data-statistics">
+                <div class="sensorinfo-title">数据统计</div>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <td>名称</td>
+                        <td>数值</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>最大值</td>
+                        <td id="max"></td>
+                    </tr>
+                    <tr>
+                        <td>最小值</td>
+                        <td id="min"></td>
+                    </tr>
+                    <tr>
+                        <td>平均值</td>
+                        <td id="ave"></td>
+                    </tr>
+                    <tr>
+                        <td>差值</td>
+                        <td id="sep"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="history-curve">
+            <div class="curve-title">
+                <div class="history-curve-title">历史曲线</div>
+                <div class="start">
+                    起始时间:
+                    <input autocomplete="off" type="text" class="Wdate"
+                           onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:new Date(),})"
+                           id="starttime" name="ApplicationTime">
+                </div>
+                <div class="end">终止时间:
+                    <input autocomplete="off" type="text" class="Wdate"
+                           onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:new Date(),})"
+                           id="endtime" name="ApplicationTime">
+                </div>
+                <div class="history-data-btn">
+                    <button id="search" type="button" class="btn btn-primary" style="font-size: 10px; padding: 0;"
+                            onclick="searchdata()">查询
+                    </button>
+                </div>
+            </div>
+            <div id="main" style="width:100%;height:400px">
+
+            </div>
+        </div>
+    </div>
+{% endif %}
+</body>
+</html>

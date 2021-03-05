@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>信息采集</title>
+    <link rel="stylesheet" href="../static/css/control.css">
+    <link rel="stylesheet" href="../static/css/assess.css">
+    <link rel="stylesheet" href="../static/css/assessinstance.css">
+    <link rel="stylesheet" href="../static/css/Dynamic.css">
+    <link rel="stylesheet" href="../static/css/info.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <script src="../static/js/jquery-3.3.1.js"></script>
+    <script src="../static/js/tokenpublic.js"></script>
+    <script src="../static/layer/layer.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+</head>
+<script type="text/javascript">
+    $(function () {
+        var index = 0;
+        var index2 = 0;
+        $(".adddevicefolder").click(function () {
+            index2 = layer.open({
+                type: 1,
+                title: "添加文件夹",
+                area: ["400px", "200px"],
+                content: $('#adddevicefolderhide')
+            })
+        })
+        $(".addfoldername").click(function () {
+            layer.close(index2)
+            var name = document.getElementById("foldername").value
+            var type = document.getElementById("typename").value;
+            //判断是否有重复
+            res = {{ result|tojson }}
+                res = eval(res)//取出结果
+            var flag = 0
+            if (name == "" || type == "") {
+                alert("名字不能为空")
+            } else if (type != 0 && type != 1) {
+                alert("您所填的种类有误!")
+            } else {
+                for (var i = 0, j = res.length; i < j; i++) {
+                    if (name == res[i][1]) {
+                        flag = 1;
+                        break;
+                    }
+                }
+                if (flag == 1) {
+                    alert("当前目录下已有该名称文件夹！")
+                } else {
+                    $.ajax({
+                        url: "/adddevicefolder",
+                        type: "get",
+                        data: {
+                            "devicename": "{{ devicename }}",
+                            "name": name,
+                            "type": type
+                        },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "0") {
+                                alert("添加失败，请确认是否有重名文件夹！")
+                            } else {
+                                console.log("here")
+                                alert("添加成功")
+                                window.location.href = "/infofolder?devicename={{ devicename }}";
+                            }
+                        },
+                        error: function (XMLHttpResponse, textStatus, errorThrown) {
+                            console.log(textStatus)
+                            console.log(errorThrown)
+                            console.log("error");
+                        }
+                    })
+                }
+            }
+        })
+        $(".deldevicefolder").click(function () {
+            index = layer.open({
+                type: 1,
+                title: "确认删除",
+                area: ["400px", "200px"],
+                content: $('#confirmdel')
+            })
+        })
+        $(".confirm").click(function () {
+            layer.close(index)
+            var wrap = document.querySelector('.device-all');
+            var deviceName = wrap.querySelectorAll('input:checked');
+            if (deviceName.length == 0) {
+                alert("无选择删除设备")
+            } else {
+                var delnameList = []
+                for (var i = 0; i < deviceName.length; i++) {
+                    delnameList.push(deviceName[i].id)
+                }
+                var jsondellist = JSON.stringify(delnameList)
+                console.log(delnameList);
+                $.ajax({
+                    url: "/deldevicefolder",
+                    type: "get",
+                    data: {
+                        "devicename": "{{ devicename }}",
+                        "foldername": jsondellist
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "0") {
+                            alert("删除文件夹出错,请刷新重试")
+                        } else {
+                            console.log("here")
+                            alert("删除成功")
+                            window.location.href = "/infofolder?devicename={{ devicename }}";
+                        }
+                    },
+                    error: function (XMLHttpResponse, textStatus, errorThrown) {
+                        console.log(textStatus)
+                        console.log(errorThrown)
+                        console.log("error");
+                    }
+                })
+            }
+        })
+        $(".off").click(function () {
+            layer.close(index)
+        })
+    })
+</script>
+<body>
+<div class="head-title">
+    <ul class="head-function" style="height: 73px;">
+        <li class="fun-list" style="margin-top: 12px;"><a href="/">首页</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/online">动态监测</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/infocollect"><span style="font-size:14px;color:white;">信息采集</span></a>
+        </li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/assess">质量评估</a></li>
+        <li class="fun-list" style="margin-top: 12px;"><a href="/processmanage">设备管理</a></li>
+    </ul>
+</div>
+<div class="assess-all">
+    <div class="asses-block" style="margin-top: 0px;width: 12.6%;padding-left: 10px;">
+        <h2 class="assess-font" style="font-weight: 600;">信息采集</h2>
+        <li class="assess-li">
+            <a href="/infocollect">
+                <img class="not-choose" alt="" src="../static/images/overview.svg">
+                <img class="choose" alt="" src="../static/images/overview-hover.svg">
+                <span class="assess-span">概览</span>
+            </a>
+        </li>
+        <li class="assess-li">
+            <a href="/infoinstance">
+                <img class="not-choose" alt="" src="../static/images/overview.svg">
+                <img class="choose" alt="" src="../static/images/overview-hover.svg">
+                <span class="assess-span">货架列表</span>
+            </a>
+        </li>
+    </div>
+    <div class="assess-func" style="margin-top: 0px;padding: 10px;">
+        <div class="assess-func-div1" style="margin-top:-25px">
+            <h3 class="title" style="font-weight: 600">文件夹列表</h3>
+        </div>
+        <div class="operator" style="margin-left: 20px;margin-top: 20px;">
+            <a href="/infoinstance" class="btn btn-info">返回上级</a>
+            <input type="button" value="添加鲳鱼文件夹" class="btn btn-info adddevicefolder"/>
+            <input type="button" value="删除鲳鱼文件夹" class="btn btn-info deldevicefolder"/>
+        </div>
+        <div class="device-all">
+            {% if length %}
+                {% for data in result %}
+                    <div class="online-box" style="height: 65px">
+                        <div class="app-manage-md50" style="width:5% ;">
+                            <input type="checkbox" id="{{ data[1] }}" style="margin-top: 30px;">
+                        </div>
+                        <div class="app-manage-md50">
+                            <div class="info-img sensorState">
+                                <img src="../static/images/file.jpg" style="width:50px;margin-top:5px">
+                            </div>
+                        </div>
+                        <div class="app-manage-md300 sensorState" style="width: 8%;margin-top: 23px;">
+                            {{ data[1] }}
+                        </div>
+                        <div class="app-manage-md230 sensorState" style="width: 20%;margin-top: 23px;">
+                            <p class="app-manage-p">创建日期：<span>{{ data[2] }}</span></p>
+                        </div>
+                        <div class="app-manage-md230 sensorState"
+                             style="width: 10%;margin-top: 23px;margin-left: 30px;">
+                            <p class="app-manage-p">种类：
+                                {% if data[4]==0 %}
+                                    <span>金鲳</span>
+                                {% else %}
+                                    <span>银鲳</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="app-manage-md230 sensorState"
+                             style="margin-left: 50px;width: 10%;margin-top: 23px;">
+                            <p class="app-manage-p" style="width: 100px">所有者：<span>{{ data[3] }}</span></p>
+                        </div>
+                        <div class="detail-info" style="width: 20%;">
+                            <a class="Dynamic-a1" href="/infofile?devicename={{ data[0] }}&foldername={{ data[1] }}">查看详情</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="online-box">
+                    <span class="no-data">暂时无数据</span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="adddevicefolderhide" id="adddevicefolderhide" style="display: none">
+        <div style="text-align: center;margin-top: 20px;">
+            <lable>名称：</lable>
+            <input type="text" id="foldername"><br>
+            <lable style="margin-top:10px">种类：</lable>
+            <input style="margin-top:10px" type="text" id="typename"><br>
+            <span>(种类中填0或1,0代表金鲳，1代表银鲳)</span>
+        </div>
+        <input type="submit" class="btn btn-info addfoldername" id="addfoldername"
+               style="margin-left: 160px;margin-top:10px;width: 80px;">
+    </div>
+    <div class="confirmdel" id="confirmdel" style="display: none">
+        <div style="text-align: center;margin-top: 30px;">
+            <lable>确定删除所选文件夹？</lable>
+        </div>
+        <br>
+        <button class="btn btn-info confirm" style="margin-left:140px">确认</button>
+        <button class="btn btn-info off">取消</button>
+    </div>
+</div>
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>

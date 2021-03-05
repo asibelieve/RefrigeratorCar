@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <title>设备管理</title>
+    <meta charset="utf-8">
+    <script src="../static/js/jquery-3.3.1.js"></script>
+    <script src="../static/js/tokenpublic.js"></script>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <link rel="stylesheet" href="../static/css/control.css">
+    <link rel="stylesheet" href="../static/css/assess.css">
+    <link rel="stylesheet" href="../static/css/Dynamic.css">
+    <link rel="stylesheet" href="../static/css/devicemanage.css">
+    <script src="../static/layer/layer.js"></script>
+    <script src="../static/js/DeviceManage.js"></script>
+</head>
+<body>
+<div class="head-title">
+    <ul class="head-function">
+        <li class="fun-list"><a href="/">首页</a></li>
+        <li class="fun-list"><a href="/online">动态监测</a></li>
+        <li class="fun-list"><a href="/infocollect">信息采集</a></li>
+        <li class="fun-list"><a href="/assess">质量评估</a></li>
+        <li class="fun-list"><a href="/processmanage"><h2 style="font-size:14px;color:white;">设备管理</h2></a></li>
+    </ul>
+</div>
+<div class="assess-all">
+    <div class="asses-block">
+        <h2 class="assess-font">设备管理</h2>
+        <li class="assess-li">
+            <a class="Dynamic-a" href="/manageonline">
+                <img class="not-choose" alt="" src="../static/images/overview.svg">
+                <span class="assess-span">设备概览</span>
+            </a>
+        </li>
+        <li class="assess-li">
+            <a class="Dynamic-a" href="/adddevicetlink">
+                <img class="not-choose" alt="" src="../static/images/overview.svg">
+                <span class="assess-span">添加设备</span>
+            </a>
+        </li>
+    </div>
+    <div class="assess-func">
+        <div class="assess-func-div1">
+            <h3 class="title">设备概览</h3>
+        </div>
+        <div class="online-offline">
+            <label><a class="line" href="/manageonline" id="online">在线</a></label>
+            <label><a class="line" href="/manageoffline" id="offline">离线</a></label>
+        </div>
+        <div class="device-all">
+            {% if length %}
+                {% for data in result %}
+                    <div class="online-box">
+                        <div class="app-manage-md50">
+                            <div class="app-manage-img sensorState">
+                                <img src="../static/images/online.png">
+                            </div>
+                        </div>
+                        <div class="app-manage-md300 sensorState" title="{{ data.deviceName }}">
+                            {{ data.deviceName }}
+                        </div>
+                        <div class="app-manage-md250 sensorState">
+                            <p class="app-manage-p app-manage-copy" cid="CP-XO4Q3PCQSYT8147X">序列号：<span
+                                    id="CP-XO4Q3PCQSYT8147X">{{ data.deviceNo }}</span></p>
+                            <p class="app-manage-p">ID：<span>{{ data.id }}</span></p>
+                        </div>
+                        <div class="app-manage-md230 sensorState">
+                            <p class="app-manage-p">创建日期：<span>{{ data.createDate }}</span></p>
+                        </div>
+                        <div class="update">
+                            <a class="updateDevicetlink" href="/updateDevicetlink?deviceid={{ data.id }}">编辑设备</a>
+                            <a class="updateDevicetlink delDevice" id="{{ data.id }}"
+                               onclick="confirmid(this.id)">删除设备</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="online-box">
+                    <span class="no-data">暂时无数据</span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="confirmdel" id="confirmdel" style="display: none">
+            <div style="text-align: center;margin-top: 30px;">
+                <lable>确定删除所选设备？</lable>
+            </div>
+            <br>
+            <button class="btn btn-info confirm" style="margin-left:140px">确认</button>
+            <button class="btn btn-info off">取消</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <base href="<%=basePath%>">
+    <title>动态监测</title>
+    <meta charset="utf-8">
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+    <script src="../static/js/tokenpublic.js"></script>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <!--
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    -->
+    <link rel="stylesheet" href="../static/css/control.css">
+    <link rel="stylesheet" href="../static/css/assess.css">
+    <link rel="stylesheet" href="../static/css/deviceinfo.css">
+    <script src="../static/layer/layer.js"></script>
+    <script src="../static/js/deviceinfo.js"></script>
+    <script>
+        function openhistory(obj) {
+            var sensorid = obj.id;
+            window.open("history?sensorid=" + sensorid + "&deviceid=" +{{ deviceid }}, "历史记录", "height=400, width=1200, toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no") //写成一行
+        }
+    </script>
+</head>
+<body>
+<div class="head-title">
+    <ul class="head-function">
+        <li class="fun-list"><a href="/">首页</a></li>
+        <li class="fun-list"><a href="/online"><h2 style="font-size:14px;color:white;">动态监测</h2></a></li>
+        <li class="fun-list"><a href="/infocollect">信息采集</a></li>
+        <li class="fun-list"><a href="/assess">质量评估</a></li>
+        <li class="fun-list"><a href="/processmanage">设备管理</a></li>
+    </ul>
+</div>
+<div class="assess-all">
+    <div class="asses-block">
+        <h2 class="assess-font">动态监测</h2>
+        <li class="assess-li">
+            <a class="Dynamic-a" href="/online">
+                <img class="not-choose" alt="" src="../static/images/overview.svg">
+                <img class="choose" alt="" src="../static/images/overview-hover.svg">
+                <span class="assess-span">设备概览</span>
+            </a>
+        </li>
+    </div>
+    <div class="assess-func">
+        <div class="assess-func-div1">
+            <h3 class="title">设备详情</h3>
+        </div>
+        <div class="online-offline">
+            <label><a class="sensorBack" href="/online" id="online">返回</a></label>
+            <span class="devicename">{{ device.deviceName }}</span>
+            <span class="xulieno">序列号：</span>
+            <span class="sensorHeadI">{{ device.deviceNo }}</span>
+        </div>
+        <div class="sensor-all">
+            {% for sensor in device["sensorsList"] %}
+                {% if sensor.sensorName!="" %}
+                    <div class="online-box">
+                        <div class="app-manage-md50">
+                            <div class="app-manage-img sensorState">
+                                <img src="../static/images/temperature.png">
+                            </div>
+                        </div>
+                        <div class="app-manage-md300 sensorState" title="${data.sensorName}">
+                            <p class="sensorName-p">{{ sensor.sensorName }}</p>
+                            <p>ID：<span>{{ sensor.id }}</span></p>
+                        </div>
+                        <div class="app-manage-md230 sensorState">
+                            <p class="app-manage-p">更新时间：<span>{{ sensor.updateDate }}</span></p>
+                        </div>
+                        <div class="sensorD">
+                            {% if sensor.sensorTypeId == 3 %}
+                                <span>
+								{{ sensor.lat[:-9] }}
+							</span>
+                                <span class="dis-left">
+								{{ sensor.lng[:-9] }}
+							</span>
+                            {% endif %}
+                            {% if sensor.sensorTypeId == 1 or sensor.sensorTypeId ==2 %}
+                                <span>{{ sensor.value }}</span>
+                                <span>{{ sensor.unit }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="tlink-Chart">
+                            <a href="javascript:void (0);" class="tlinkChart layui-icon tlinkPolice" id={{ sensor.id }}>
+                                报警记录</a>
+                            <!-- sid设备ID cid传感器id 按钮ID拼接real+传感器ID-->
+                            <a href="javascript:void(0);" class="tlinkChart layui-icon tlinkHistory"
+                               id={{ sensor.id }} onclick="openhistory(this)">
+                                历史查询</a>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="alarmrecord" style="display: none" id="alarmrecord">
+            <table border=1 class="table table-hover alarmtable">
+                <thead>
+                <tr>
+                    <td>传感器名称</td>
+                    <td>传感器id</td>
+                    <td>报警状态</td>
+                    <td>报警时间</td>
+                    <td>报警内容</td>
+                    <td>触发值</td>
+                </tr>
+                </thead>
+                <tbody class="alarm">
+                </tbody>
+            </table>
+            <div class="noalarmdata" style="display: none;text-align: center;margin-top: 50px;font-size: 20px;">
+                无相关报警数据
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

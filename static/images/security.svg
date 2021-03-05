@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>安全设置</title>
+    <desc>Created with Sketch.</desc>
+    <g id="ICON-已上线" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="LB实例列表-Copy-3">
+            <g id="安全设置">
+                <rect id="Rectangle" fill="#444444" opacity="0" x="0" y="0" width="16" height="16"></rect>
+                <path d="M12,7.28618571 L10.750825,8 L9,8 L9,9.00047143 L8.504,9.2839 L8,9.5719 L8,10.1519 L8,11 L7,11 L7,8 L4,8 L4,6 L7,6 L7,4 L9,4 L9,6 L12,6 L12,7.28618571 Z M13,7.28618571 L13,3 L3,3 L3,8.4 C3.013,8.803 3.268,12.589 8,13.934 L8,14.1519 L8,14.7319 L8.504,15.0199 L9.45164829,15.5614133 C9.00472872,15.7290733 8.52181234,15.8767213 8,16 C1.054,14.359 1,8.4 1,8.4 L1,1 L15,1 L15,8.4 C15,8.4 14.9999115,8.40977133 14.9992803,8.42863161 L13,7.28618571 Z M12.5,13.5 C13.328,13.5 14,12.829 14,12 C14,11.171 13.328,10.5 12.5,10.5 C11.672,10.5 11,11.171 11,12 C11,12.829 11.672,13.5 12.5,13.5 Z M12.5,8 L16,10 L16,14 L12.5,16 L9,14 L9,10 L12.5,8 Z"
+                      id="合并形状" fill="#888888"></path>
+            </g>
+        </g>
+    </g>
+</svg>
