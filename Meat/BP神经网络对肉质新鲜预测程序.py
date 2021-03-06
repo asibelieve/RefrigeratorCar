@@ -4,7 +4,7 @@ Created on Wed Jan 20 00:32:33 2021
 
 @author: Administrator
 """
-import os
+
 import warnings
 from abc import ABCMeta
 
@@ -22,8 +22,6 @@ from sklearn.utils import gen_batches, check_random_state
 from sklearn.utils import shuffle
 from sklearn.utils.extmath import safe_sparse_dot
 from sklearn.utils.validation import check_is_fitted
-
-basePath = os.getcwd()
 
 _STOCHASTIC_SOLVERS = ['sgd', 'adam']
 
@@ -526,7 +524,6 @@ class BaseMultilayerPerceptron(BaseEstimator, metaclass=ABCMeta):
         return y_pred
 
 
-
 class BP(BaseMultilayerPerceptron, RegressorMixin):
     def __init__(self, hidden_layer_sizes=(100,), activation="relu",
                  solver='adam', alpha=0.0001,
@@ -568,7 +565,7 @@ class BP(BaseMultilayerPerceptron, RegressorMixin):
         return X, y
 
 
-data = pd.DataFrame(pd.read_excel(io=(os.path.join(basePath, '预测数据.xlsx'))))  # 读取excel的数据集
+data = pd.DataFrame(pd.read_excel(r'预测数据.xlsx'))  # 读取excel的数据集
 x = data.iloc[:, :3]
 y = data.iloc[:, 3:]
 
@@ -578,30 +575,19 @@ zz = list(data.iloc[0:-1, -1])
 pre1 = model.predict(x.iloc[0:-1, :])  # 模型预测
 print('最小均方误差为：', np.abs(zz - pre1).mean())  # 模型评价
 
-
-# i=2
-# while(i):
-#     i=i-1
-#     print('进行两次测试:\n')
-#     Tem=input('请输入温度值:')
-#     O2=input('请输入氧气值:')
-#     NH3=input('请输入氨气值:')
-#     x_test=np.array((float(Tem),float(O2),float(NH3))).reshape(1,3)
-#
-#     pre = model.predict(x_test)  # 模型预测
-#     if pre<15:
-#         print("TVBN值为：{:.2f} < 15，冷藏肉为一级新鲜".format(float(pre)))
-#     elif 15<pre<25:
-#         print("TVBN值为：15 < {:.2f} < 25，冷藏肉为二级新鲜".format(float(pre)))
-#     else :
-#         print("TVBN值为：{:.2f} > 25，冷藏肉不新鲜".format(float(pre)))
-
-def fresh_level(Tem, O2, NH3):
+i = 2
+while (i):
+    i = i - 1
+    print('进行两次测试:\n')
+    Tem = input('请输入温度值:')
+    O2 = input('请输入氧气值:')
+    NH3 = input('请输入氨气值:')
     x_test = np.array((float(Tem), float(O2), float(NH3))).reshape(1, 3)
+
     pre = model.predict(x_test)  # 模型预测
     if pre < 15:
-        return "TVBN值为：{:.2f} < 15，冷藏肉为一级新鲜".format(float(pre))
+        print("TVBN值为：{:.2f} < 15，冷藏肉为一级新鲜".format(float(pre)))
     elif 15 < pre < 25:
-        return "TVBN值为：15 < {:.2f} < 25，冷藏肉为二级新鲜".format(float(pre))
+        print("TVBN值为：15 < {:.2f} < 25，冷藏肉为二级新鲜".format(float(pre)))
     else:
-        return "TVBN值为：{:.2f} > 25，冷藏肉不新鲜".format(float(pre))
+        print("TVBN值为：{:.2f} > 25，冷藏肉不新鲜".format(float(pre)))
