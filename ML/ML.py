@@ -26,7 +26,7 @@ import numpy as np
 import matplotlib
 
 for f in matplotlib.font_manager.fontManager.ttflist:
-    basePath = workpath = os.getcwd() + '/ML/'
+    basePath = os.getcwd() + '/ML/'
 
 
 def data_divide(data):  # 定义数据分割函数，将数据分为训练集和测试集
