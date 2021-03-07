@@ -25,27 +25,8 @@
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
 
-    <!-- 引入echarts -->
-    <script src="../static/js/echarts.js"></script>
-    <script type="text/javascript">
-        function imgChange(obj) {
-            var file = document.getElementById("file");
-            var File = file.files[0];
-            var name = File.name;
-            if (File.name == "") {
-                alert("请上传.xlsx文件");
-                return false;
-            } else {
-                var imgStr = /\.(xlsx|XLSX)$/;
-                if (!imgStr.test(File.name)) {
-                    alert("文件不是.xlsx格式");
-                    return false;
-                }
-            }
-        };
-
-        <link href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet">
-            <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+    <link href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="../static//My97DatePicker/WdatePicker.js"></script>
     <link rel="stylesheet" href="../static/css/assessinstance.css">
 </head>
@@ -71,38 +52,58 @@
             </a>
         </li>
         <li class="assess-li">
+            <a href="/assessinstance">
+                <img class="not-choose" alt="" src="../static/images/overview.svg">
+                <img class="choose" alt="" src="../static/images/overview-hover.svg">
+                <span class="assess-span">虾</span>
+            </a>
+        </li>
+        <li class="assess-li">
             <img class="not-choose" alt="" src="../static/images/snapshot.svg">
             <div id="accordion">
                 <div class="card">
                     <div class="card-header">
-                        <a class="card-link" data-toggle="collapse" href="/assessinstance">
-                            虾
+                        <a class="card-link" data-toggle="collapse" href="/assess_meat">
+                            肉类
                         </a>
                     </div>
-        <li class="assess-li">
-            <a href="/assess_meat" class="assess-href">
-                <img class="not-choose" alt="" src="../static/images/overview.svg">
-                <img class="choose" alt="" src="../static/images/overview-hover.svg">
-                <span class="assess-span">肉类</span>
-            </a>
+
+                </div>
+            </div>
         </li>
     </div>
-</div>
-</li>
-</div>
-<div class="assess-func" style="margin-top: 0px;padding: 10px;">
-    <div class="assess-func-div1" style="margin-top: -8px;">
-        <h3 class="title" style="font-weight: 600">虾</h3>
-    </div>
-    <div class="assess-func-div2">
-        {% if flag!=1 %}
-                <div class="div2-son">
-                    <div class="selectbtn">
-                        <form action="/access_shrimp" method="POST" enctype="multipart/form-data">
-                            <input type="file" name="file" id="file" ;"/>
-                            <input type="submit" value="上传">
-                        </form>
-                    </div>
+    <div class="assess-func" style="margin-top: 0px;padding: 10px;">
+        <div class="assess-func-div1" style="margin-top: -8px;">
+            <h3 class="title" style="font-weight: 600">实例</h3>
+        </div>
+        <div class="assess-func-div2">
+            {% if flag!=1 %}
+                <div class="container">
+                    <form class="cd-form floating-labels" action="/assess_meat_submit" method="POST">
+                        <fieldset>
+                            <legend>请输入原始数据：</legend>
+
+                            <div class="icon">
+                                <label class="cd-label" for="cd-name">温度</label>
+                                <input class="user" type="text" name="tem" id="tem" required>
+                            </div>
+
+                            <div class="icon">
+                                <label class="cd-label" for="cd-company">氧气</label>
+                                <input class="company" type="text" name="o2" id="o2">
+                            </div>
+
+                            <div class="icon">
+                                <label class="cd-label" for="cd-email">氨气</label>
+                                <input class="email error" type="text" name="nh3" id="nh3" required>
+                            </div>
+                        </fieldset>
+
+                        <div>
+                            <input type="submit" value="提交">
+                        </div>
+                        </fieldset>
+                    </form>
                 </div>
             {% endif %}
             {% if flag %}
@@ -110,15 +111,9 @@
                      style="margin-left: 40px;margin-top:20px;background: white;height: 1100px;">
                     <h2 style="padding-top: 20px;font-size: 28px;margin-left: 20px;">评估报告</h2>
                     <hr>
-                    <p style="margin-left: 20px;font-size: 20px;">预测结果可视化:</p>
                     <div>
-                        <img id="resimg" style="width: 400px;display: table-cell;margin: 0 auto;"
-                             src="../static/result/result.png" title="预测结果">
-                    </div>
-                    <div>
-                        <p style="margin-left: 20px;font-size: 20px;margin-top: 30px">结果分析:</p>
                         <p style="margin-left: 20px;font-size: 20px;text-indent: 2em; margin-right: 20px;">
-                            南美白对虾高光谱数据TVB-N评估值为：{{ result }}。
+                            {{ result }}
                         </p>
                     </div>
 

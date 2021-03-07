@@ -23,7 +23,7 @@ from sklearn.utils import shuffle
 from sklearn.utils.extmath import safe_sparse_dot
 from sklearn.utils.validation import check_is_fitted
 
-basePath = os.getcwd()
+basePath = os.getcwd() + '/Meat/'
 
 _STOCHASTIC_SOLVERS = ['sgd', 'adam']
 
@@ -524,7 +524,6 @@ class BaseMultilayerPerceptron(BaseEstimator, metaclass=ABCMeta):
         y_pred = activations[-1]
 
         return y_pred
-
 
 
 class BP(BaseMultilayerPerceptron, RegressorMixin):
