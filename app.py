@@ -217,10 +217,6 @@ def historysearch():
 '''质量评估模块概览'''
 
 
-@app.route("/assess")
-def assess():
-    return render_template("assessFish.html")
-
 
 '''质量评估木块实例'''
 
@@ -232,6 +228,12 @@ def assessinstance():
                            gill_fresh_level="", gill_believeble=1, all_fresh_level="", eye_star_len="",
                            gill_star_len="", type=0)
 
+@app.route("/assess_meat")
+def assess_meat():
+    return render_template("assess_meat.html", flag=0, originpath="", result_path="", eye_fresh_level="",
+                           eye_believeble=1,
+                           gill_fresh_level="", gill_believeble=1, all_fresh_level="", eye_star_len="",
+                           gill_star_len="", type=0)
 
 @app.route("/assessyinchang")
 def assessyinchang():
@@ -413,6 +415,10 @@ def deldevice():
             print("del error")
     return flag
 
+
+@app.route("/assess")
+def assess():
+    return render_template("assessFish.html")
 
 @app.route("/deldevicefolder")
 def deldevicefolder():
