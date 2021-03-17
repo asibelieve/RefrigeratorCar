@@ -4,10 +4,16 @@ import time
 
 import requests
 
+
+with open("token.txt", "r") as f:  # 打开文件
+    data = f.read()  # 读取文件
+    print(data)
+
 '''连接tlink平台数据的认证信息'''
 userid = "200000152"
 thinkAppId = "36b4943878cb4f8eab2c6473f0169917"
-Authorization = "Bearer 949c2289-2413-4487-abdb-962ea955f110"
+Authorization = str("Bearer ") + str(data)
+print(Authorization)
 headers = {"tlinkAppId": thinkAppId, "Authorization": Authorization, "Content-type": "application/json",
            "Cache-Control": "no-cache"}
 

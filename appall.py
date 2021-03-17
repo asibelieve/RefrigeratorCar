@@ -1,11 +1,13 @@
 from flask import Flask
 
+from RefreshToken import app as RefreshToken
 from app import app as app1
 from assess_meat import assess_meat_page
 from assess_shrimp import assess_shrimp_page
 from manage import app as appmanage
 from usercontrol import app as appusercontrol
 from assess import app as appassess
+from SubmitToken import app as SubmitToken
 
 # 创建flask对象
 app = Flask(__name__)
@@ -16,5 +18,8 @@ app.register_blueprint(appassess)
 app.register_blueprint(appusercontrol)
 app.register_blueprint(assess_shrimp_page)
 app.register_blueprint(assess_meat_page)
+app.register_blueprint(RefreshToken)
+app.register_blueprint(SubmitToken)
+
 if __name__ == '__main__':
     app.run()

@@ -38,6 +38,7 @@ def logincheck():
                         token = generate_token(key, 3600)
                         msg = "登录成功"
                         print(key, token)
+
                         return render_template("index.html", token=token, key=key, operator="login")
                 except:
                     print("connect database error")
