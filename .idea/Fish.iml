@@ -6,9 +6,8 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
-      <excludeFolder url="file://$MODULE_DIR$/Mask_RCNN" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.6 (Fish)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (fish) (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">

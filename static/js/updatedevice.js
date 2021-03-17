@@ -28,7 +28,7 @@ $(function () {
         var protocoltype = $(".protocol").find("option:selected").text();
         var delay = $("#delay").val()
         var deviceid = res["id"]
-        var json = "{\"lng\":" + res["lng"] + ",\"linkType\": \"" + protocoltype + "\",\"timescale\": " + delay + ",\"userId\": 200017377,\"deviceName\": \"" + devicename + "\",\"lat\": " + res["lat"] + "," +
+        var json = "{\"lng\":" + res["lng"] + ",\"linkType\": \"" + protocoltype + "\",\"timescale\": " + delay + ",\"userId\": 200000152,\"deviceName\": \"" + devicename + "\",\"lat\": " + res["lat"] + "," +
             "\"deviceId\":" + res["id"] + ",\"sensorList\": ["
         var length = $(".sensorname").length
         var sensor = res["sensorsList"]
@@ -69,7 +69,7 @@ $(function () {
         var protocoltype = $(".protocol").find("option:selected").text();
         var delay = $("#delay").val()
         var deviceid = res["id"]
-        var json = "{\"lng\":" + res["lng"] + ",\"linkType\": \"" + protocoltype + "\",\"timescale\": " + delay + ",\"userId\": 200017377,\"deviceName\": \"" + devicename + "\",\"lat\": " + res["lat"] + "," +
+        var json = "{\"lng\":" + res["lng"] + ",\"linkType\": \"" + protocoltype + "\",\"timescale\": " + delay + ",\"userId\": 200000152,\"deviceName\": \"" + devicename + "\",\"lat\": " + res["lat"] + "," +
             "\"deviceId\":" + res["id"] + ",\"delSensorIds\":" + sensorid + ",\"sensorList\": ["
         var length = res["sensorsList"].length
         var sensor = res["sensorsList"]

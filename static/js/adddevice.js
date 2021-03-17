@@ -14,7 +14,7 @@ $(function () {
         protocoltype = protocoltype.toLowerCase()
         var delay = $("#delay").val()
         var length = $(".sensorname").length
-        json = "{\"lng\": \"113.956591\",\"linkType\": \"" + protocoltype + "\",\"timescale\": " + delay + ",\"userId\": 200017377,\"deviceName\": \"" + devicename + "\",\"lat\": \"22.601376\",\"sensorList\": ["
+        json = "{\"lng\": \"113.956591\",\"linkType\": \"" + protocoltype + "\",\"timescale\": " + delay + ",\"userId\": 200000152,\"deviceName\": \"" + devicename + "\",\"lat\": \"22.601376\",\"sensorList\": ["
         if (!devicename) {
             layer.close(index)
             alert("设备名称不能为空!")

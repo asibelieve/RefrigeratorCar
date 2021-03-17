@@ -5,9 +5,9 @@ import time
 import requests
 
 '''连接tlink平台数据的认证信息'''
-userid = "200017377";
-thinkAppId = "6b633363d3f94d8185a218b6689a1207"
-Authorization = "Bearer 7070619e-e4af-44df-b213-1f21a7f01cc2"
+userid = "200000152"
+thinkAppId = "36b4943878cb4f8eab2c6473f0169917"
+Authorization = "Bearer 949c2289-2413-4487-abdb-962ea955f110"
 headers = {"tlinkAppId": thinkAppId, "Authorization": Authorization, "Content-type": "application/json",
            "Cache-Control": "no-cache"}
 

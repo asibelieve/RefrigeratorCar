@@ -24,7 +24,7 @@ def manageonline():
             }
             return 的参数说明，result表示设备信息，length表示设备的个数，line表示当前状态是在线还是不在线
         '''
-    json = "{\"userId\": \"200017377\", \"isDelete\": 0, \"isLine\": 1,\"currPage\": 1,\"pageSize\": 100 }"
+    json = "{\"userId\": \"200000152\", \"isDelete\": 0, \"isLine\": 1,\"currPage\": 1,\"pageSize\": 100 }"
     url = 'http://api.tlink.io/api/device/getDevices'
     s = getinfo(json, url)
     s = s.replace('null', '0')
@@ -45,7 +45,7 @@ def manageoffline():
     '''json为接口的参数，具体参数说明见tlink，url为请求的路径，用request进行请求，输出r.text即为结果
         return 的参数说明，result表示设备信息，length表示设备的个数，line表示当前状态是在线还是不在线
     '''
-    json = "{\"userId\": \"200017377\", \"isDelete\": 0, \"isLine\": 0,\"currPage\": 1,\"pageSize\": 100 }"
+    json = "{\"userId\": \"200000152\", \"isDelete\": 0, \"isLine\": 0,\"currPage\": 1,\"pageSize\": 100 }"
     url = 'http://api.tlink.io/api/device/getDevices'
     s = getinfo(json, url)
     s = s.replace('null', '0')
@@ -66,7 +66,7 @@ def adddevicetlink():
 @app.route("/updateDevicetlink")
 def updateDevicetlink():
     deviceid = request.args.get("deviceid")
-    json = "{\"userId\": \"200017377\", \"deviceId\": " + deviceid + ",\"currPage\": 1,\"pageSize\": 100 }"
+    json = "{\"userId\": \"200000152\", \"deviceId\": " + deviceid + ",\"currPage\": 1,\"pageSize\": 100 }"
     url = 'http://api.tlink.io/api/device/getSingleDeviceDatas'
     s = getinfo(json, url)
     s = s.replace("null", "0")
@@ -115,7 +115,7 @@ def confirmadddevice():
 @app.route("/deldevicetlink")
 def deldevice():
     deviceid = request.args.get("deviceid")
-    json = "{\"userId\": \"200017377\", \"deviceId\": " + deviceid + " }"
+    json = "{\"userId\": \"200000152\", \"deviceId\": " + deviceid + " }"
     print(json)
     url = "http://api.tlink.io/api/device/deleteDevice"
     s = getinfo(json, url)

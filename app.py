@@ -39,7 +39,7 @@ def online():
         }
         return 的参数说明，result表示设备信息，length表示设备的个数，line表示当前状态是在线还是不在线
     '''
-    json = "{\"userId\": \"200017377\", \"isDelete\": 0, \"isLine\": 1,\"currPage\": 1,\"pageSize\": 100 }"
+    json = "{\"userId\": \"200000152\", \"isDelete\": 0, \"isLine\": 1,\"currPage\": 1,\"pageSize\": 100 }"
     url = 'http://api.tlink.io/api/device/getDevices'
     s = getinfo(json, url)
     s = s.replace('null', '0')
@@ -60,7 +60,7 @@ def offline():
     '''json为接口的参数，具体参数说明见tlink，url为请求的路径，用request进行请求，输出r.text即为结果
         return 的参数说明，result表示设备信息，length表示设备的个数，line表示当前状态是在线还是不在线
     '''
-    json = "{\"userId\": \"200017377\", \"isDelete\": 0, \"isLine\": 0,\"currPage\": 1,\"pageSize\": 100 }"
+    json = "{\"userId\": \"200000152\", \"isDelete\": 0, \"isLine\": 0,\"currPage\": 1,\"pageSize\": 100 }"
     url = 'http://api.tlink.io/api/device/getDevices'
     s = getinfo(json, url)
     s = s.replace('null', '0')
@@ -88,7 +88,7 @@ def deviceDetail():
     }:
     '''
     deviceid = request.args.get('deviceid')
-    json = "{\"userId\": \"200017377\", \"deviceId\": " + deviceid + ",\"currPage\": 1,\"pageSize\": 100 }"
+    json = "{\"userId\": \"200000152\", \"deviceId\": " + deviceid + ",\"currPage\": 1,\"pageSize\": 100}"
     url = 'http://api.tlink.io/api/device/getSingleDeviceDatas'
     s = getinfo(json, url)
     print(s)
@@ -116,7 +116,7 @@ def getRecord():
     :return:
     '''
     sensorid = request.args.get("id")
-    json = "{\"userId\": \"200017377\", \"sensorId\": " + sensorid + ",\"currPage\": 1,\"pageSize\": 100 }"
+    json = "{\"userId\": \"200000152\", \"sensorId\": " + sensorid + ",\"currPage\": 1,\"pageSize\": 100 }"
     url = 'http://api.tlink.io/api/alarms/getAlarmsHistory'
     s = getinfo(json, url)
     s = s.replace("null", "0")
@@ -156,7 +156,7 @@ def getHistory():
     endDate = "\"" + t1 + "\""
     deviceid = request.args.get("deviceid")
     sensorid = request.args.get("sensorid")
-    json = "{\"userId\": \"200017377\",\"deviceId\":" + deviceid + ", \"sensorId\": " + sensorid + ",\"startDate\":" + startDate + ",\"endDate\":" + endDate + ",\"currPage\": 1,\"pageSize\": 100 }"
+    json = "{\"userId\": \"200000152\", \"sensorId\": " + sensorid + ",\"startDate\":" + startDate + ",\"endDate\":" + endDate + ",\"pagingState\": "",\"pageSize\": 100 }"
     url = 'http://api.tlink.io/api/device/getSensorHistroy'
     s = getinfo(json, url)
     s = s.replace("null", "0")
@@ -171,7 +171,7 @@ def getHistory():
             "sensorId":20******44//传感器id 
         }
     '''
-    json2 = "{\"userId\": \"200017377\", \"sensorId\": " + sensorid + " }"
+    json2 = "{\"userId\": \"200000152\", \"sensorId\": " + sensorid + ",\"currPage\":1 ,\"pageSize\":100}"
     url2 = 'http://api.tlink.io/api/device/getSingleSensorDatas'
     s2 = getinfo(json2, url2)
     s2 = s2.replace("null", "0")
@@ -196,9 +196,12 @@ def historysearch():
     sensorid = request.args.get("sensorid")
     startDate = "\"" + request.args.get("starttime") + "\""
     endDate = "\"" + request.args.get("endtime") + "\""
-    json = "{\"userId\": \"200017377\",\"deviceId\":" + deviceid + ", \"sensorId\": " + sensorid + ",\"startDate\":" + startDate + ",\"endDate\":" + endDate + ",\"currPage\": 1,\"pageSize\": 100 }"
+    json = "{\"userId\":\"200000152\", \"sensorId\": " + sensorid + ",\"startDate\":" + startDate + ",\"endDate\":" + endDate + ",\"pagingState\": \"\",\"pageSize\":100 }"
+    print("这里是historysearch方法")
+    print(json)
     url = 'http://api.tlink.io/api/device/getSensorHistroy'
     s = getinfo(json, url)
+    print(s)
     s = s.replace("null", "0")
     text = "123"
     try:

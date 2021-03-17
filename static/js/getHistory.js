@@ -8,7 +8,7 @@ var settings = {
         "Content-Type": "text/plain"
     },
     "data": "{" +
-        "\r\n  \"userId\":200017377," +
+        "\r\n  \"userId\":200000152," +
         "\r\n  \"deviceId\":200007683," +
         "\r\n  \"sensorId\":200070123," +
         "\r\n  \"startDate\" : \"2020-01-10 10:01:11\"," +
